@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="content" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.eventManage.controller.CustomerController">
+   <children>
+      <ImageView fx:id="customer" fitHeight="700.0" fitWidth="900.0" pickOnBounds="true">
+         <image>
+            <Image url="@../image/customers.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="277.0" layoutY="37.0" text="Customers">
+         <font>
+            <Font name="Britannic Bold" size="73.0" />
+         </font>
+      </Label>
+      <Label layoutX="134.0" layoutY="203.0" text="Customer Id         :">
+         <font>
+            <Font name="Britannic Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="133.0" layoutY="244.0" text="Customer Name    :">
+         <font>
+            <Font name="Britannic Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="132.0" layoutY="285.0" text="Contact Number    :">
+         <font>
+            <Font name="Britannic Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCustomer" layoutX="310.0" layoutY="199.0" prefHeight="26.0" prefWidth="275.0" style="-fx-background-color: white; -fx-border-color: black;" />
+      <TextField fx:id="txtName" layoutX="310.0" layoutY="241.0" prefHeight="26.0" prefWidth="275.0" style="-fx-border-color: black;" />
+      <TextField fx:id="txtNumber" layoutX="310.0" layoutY="281.0" prefHeight="26.0" prefWidth="275.0" style="-fx-border-color: black;" />
+      <Button layoutX="108.0" layoutY="362.0" mnemonicParsing="false" onAction="#homeAction" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #142171;" text="Home" textFill="WHITE" />
+      <Button layoutX="244.0" layoutY="362.0" mnemonicParsing="false" onAction="#refreshAction" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #19619c;" text="Refresh" textFill="WHITE" />
+      <Button fx:id="btnSave" layoutX="496.0" layoutY="362.0" mnemonicParsing="false" onAction="#acSave" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #2ecc71;" text="Save" textFill="WHITE" />
+      <Button fx:id="btnUpdate" layoutX="633.0" layoutY="362.0" mnemonicParsing="false" onAction="#acUpdate" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #546fbf;" text="Update" textFill="WHITE" />
+      <Button fx:id="btnDelete" layoutX="769.0" layoutY="362.0" mnemonicParsing="false" onAction="#acDelete" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #e74c3c;" text="Delete" textFill="WHITE" />
+      <TableView fx:id="tblCustomer" layoutX="50.0" layoutY="428.0" onMouseClicked="#acCustomer" prefHeight="236.0" prefWidth="794.0">
+        <columns>
+          <TableColumn fx:id="colCustomerId" prefWidth="244.0000228881836" text="Customer Id" />
+          <TableColumn fx:id="colCustomerName" prefWidth="292.0000305175781" text="Customer Name" />
+            <TableColumn fx:id="colNumber" prefWidth="259.20001220703125" text="Contact Number" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

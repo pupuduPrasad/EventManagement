@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="content" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.eventManage.controller.EventController">
+   <children>
+      <ImageView fx:id="imageView" fitHeight="700.0" fitWidth="900.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../projectImage/events.jpg" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </ImageView>
+      <Label layoutX="343.0" layoutY="25.0" prefHeight="72.0" prefWidth="213.0" text="EVENTS" textFill="WHITE">
+         <font>
+            <Font name="Britannic Bold" size="62.0" />
+         </font>
+      </Label>
+      <Label layoutX="143.0" layoutY="101.0" prefHeight="30.0" prefWidth="83.0" text="Event Id :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="143.0" layoutY="131.0" prefHeight="30.0" prefWidth="106.0" text="Event Name :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="143.0" layoutY="232.0" prefHeight="30.0" prefWidth="83.0" text="Date :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="143.0" layoutY="265.0" prefHeight="30.0" prefWidth="83.0" text="Time :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtTitle" layoutX="276.0" layoutY="135.0" prefHeight="26.0" prefWidth="267.0" />
+      <TextField fx:id="txtTime" layoutX="276.0" layoutY="268.0" prefHeight="26.0" prefWidth="267.0" />
+      <TableView fx:id="tblEvent" layoutX="40.0" layoutY="395.0" onMouseClicked="#tblEventAction" prefHeight="283.0" prefWidth="820.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+        <columns>
+          <TableColumn fx:id="colEventId" prefWidth="103.99999237060547" text="Event ID" />
+            <TableColumn fx:id="colEventName" prefWidth="219.99996948242188" text="Event Name" />
+            <TableColumn fx:id="colFaculity" prefWidth="150.40005493164062" text="Faculty" />
+            <TableColumn fx:id="colDescription" prefWidth="172.79998779296875" text="Description" />
+            <TableColumn fx:id="colDate" prefWidth="89.5999755859375" text="Date" />
+            <TableColumn fx:id="colTime" prefWidth="75.0" text="Time" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label fx:id="lblEventId" layoutX="276.0" layoutY="103.0" prefHeight="18.0" prefWidth="267.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="picDate" layoutX="276.0" layoutY="234.0" prefHeight="26.0" prefWidth="267.0" />
+      <Button fx:id="btnSave" layoutX="784.0" layoutY="335.0" mnemonicParsing="false" onAction="#saveOnAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #2ecc71;" text="Save" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnUpdate" layoutX="700.0" layoutY="335.0" mnemonicParsing="false" onAction="#updateAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #546fbf;" text="Update" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btDelete" layoutX="614.0" layoutY="335.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #e74c3c;" text="Delete" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="41.0" layoutY="335.0" mnemonicParsing="false" onAction="#homeAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: green;" text="Home" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="127.0" layoutY="335.0" mnemonicParsing="false" onAction="#refreshAction" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #48b8e1;" text="Refresh" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="143.0" layoutY="198.0" prefHeight="30.0" prefWidth="106.0" text="Description :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtDescription" layoutX="276.0" layoutY="201.0" prefHeight="26.0" prefWidth="267.0" />
+      <Label layoutX="143.0" layoutY="165.0" prefHeight="30.0" prefWidth="83.0" text="Faculity :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtFaculty" layoutX="276.0" layoutY="168.0" prefHeight="26.0" prefWidth="267.0" />
+      <Label fx:id="lblDate" layoutX="554.0" layoutY="234.0" prefHeight="18.0" prefWidth="267.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

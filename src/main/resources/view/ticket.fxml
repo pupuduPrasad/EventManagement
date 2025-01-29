@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="content" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.eventManage.controller.TicketPageController">
+   <children>
+      <ImageView fx:id="imageView" fitHeight="700.0" fitWidth="900.0" pickOnBounds="true">
+         <image>
+            <Image url="@../image/simple6.jpeg" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="300.0" layoutY="21.0" prefHeight="75.0" prefWidth="300.0" text="Ticket">
+         <font>
+            <Font name="Britannic Bold" size="50.0" />
+         </font>
+      </Label>
+      <Label layoutX="153.0" layoutY="185.0" prefHeight="38.0" prefWidth="122.0" text="Ticket Id          :">
+         <font>
+            <Font name="Britannic Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="153.0" layoutY="223.0" prefHeight="38.0" prefWidth="122.0" text="Price               :">
+         <font>
+            <Font name="Britannic Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="153.0" layoutY="261.0" prefHeight="38.0" prefWidth="122.0" text="Customer Id     :">
+         <font>
+            <Font name="Britannic Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="153.0" layoutY="299.0" prefHeight="38.0" prefWidth="122.0" text="Evenet Id          :">
+         <font>
+            <Font name="Britannic Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblId" layoutX="274.0" layoutY="191.0" prefHeight="26.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 3; -fx-border-color: black;" />
+      <Label layoutX="275.0" layoutY="305.0" prefHeight="25.0" prefWidth="350.0" />
+      <TextField fx:id="txtPrice" layoutX="275.0" layoutY="230.0" prefHeight="27.0" prefWidth="350.0" style="-fx-border-color: black;" />
+      <TextField fx:id="lblCustomerId" layoutX="275.0" layoutY="266.0" prefHeight="27.0" prefWidth="350.0" style="-fx-border-color: black;" />
+      <TextField fx:id="lblEventId" layoutX="275.0" layoutY="304.0" prefHeight="27.0" prefWidth="350.0" style="-fx-border-color: black;" />
+      <TableView fx:id="tblTicket" layoutX="63.0" layoutY="441.0" onMouseClicked="#ticketAction" prefHeight="237.0" prefWidth="786.0">
+        <columns>
+          <TableColumn fx:id="colTicketId" prefWidth="162.4000473022461" text="Ticket Id" />
+          <TableColumn fx:id="colDate" prefWidth="163.20001220703125" text="Date" />
+            <TableColumn fx:id="colPrice" prefWidth="148.80001831054688" text="Price" />
+            <TableColumn fx:id="colCustomerId" prefWidth="151.99993896484375" text="Customer Id" />
+            <TableColumn fx:id="colEventId" prefWidth="160.00006103515625" text="Event Id" />
+        </columns>
+      </TableView>
+      <Button layoutX="101.0" layoutY="384.0" mnemonicParsing="false" onAction="#acHome" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: #142171;" text="Home" textFill="WHITE" />
+      <Button layoutX="214.0" layoutY="384.0" mnemonicParsing="false" onAction="#acRefresh" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: #19619c;" text="Refresh" textFill="WHITE" />
+      <Button fx:id="btnSave" layoutX="488.0" layoutY="384.0" mnemonicParsing="false" onAction="#acSave" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: #2ecc71;" text="Save" textFill="WHITE" />
+      <Button fx:id="btnUpdate" layoutX="625.0" layoutY="384.0" mnemonicParsing="false" onAction="#acUpdate" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: #546fbf;" text="Update" textFill="WHITE" />
+      <Button fx:id="btnDelete" layoutX="763.0" layoutY="384.0" mnemonicParsing="false" onAction="#acDelete" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: #e74c3c;" text="Delete" textFill="WHITE" />
+   </children>
+</AnchorPane>

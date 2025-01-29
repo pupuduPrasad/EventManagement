@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="content" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.eventManage.controller.UserController">
+   <children>
+      <ImageView fitHeight="700.0" fitWidth="900.0" opacity="0.5" pickOnBounds="true">
+         <image>
+            <Image url="@../image/simple7.jpeg" />
+         </image>
+      </ImageView>
+      <Label layoutX="310.0" layoutY="36.0" text="Add/Remove User">
+         <font>
+            <Font name="Britannic Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="132.0" layoutY="129.0" prefHeight="30.0" prefWidth="113.0" text="Username :">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="132.0" layoutY="181.0" prefHeight="30.0" prefWidth="113.0" text="Password :">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="132.0" layoutY="234.0" prefHeight="30.0" prefWidth="157.0" text="Confirm Password :">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtConfirmPassword" layoutX="290.0" layoutY="234.0" prefHeight="30.0" prefWidth="379.0" style="-fx-border-color: black;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtPassword" layoutX="290.0" layoutY="181.0" prefHeight="30.0" prefWidth="379.0" style="-fx-border-color: black;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtUsername" layoutX="290.0" layoutY="129.0" prefHeight="30.0" prefWidth="379.0" style="-fx-border-color: black;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Button layoutX="656.0" layoutY="299.0" mnemonicParsing="false" onAction="#addUserOnAction" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #0abde3; -fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10;" text="Add">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ComboBox fx:id="cmbRemoveUser" layoutX="134.0" layoutY="396.0" onAction="#selectOnAction" prefHeight="36.0" prefWidth="659.0" promptText="Select the user you want to remove" />
+      <Button fx:id="btnRemove" layoutX="719.0" layoutY="484.0" mnemonicParsing="false" onAction="#removeUerOnAction" prefHeight="30.0" prefWidth="79.0" style="-fx-background-color: #0abde3; -fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10;" text="Remove">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Separator layoutX="-2.0" layoutY="365.0" prefHeight="4.0" prefWidth="900.0" style="-fx-background-color: black; -fx-border-color: black;" />
+      <Button layoutX="132.0" layoutY="484.0" mnemonicParsing="false" onAction="#homeAc" prefHeight="30.0" prefWidth="79.0" style="-fx-background-color: #142171; -fx-border-color: black; -fx-background-radius: 10; -fx-border-radius: 10;" text="Home" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>

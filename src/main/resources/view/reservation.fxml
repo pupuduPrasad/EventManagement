@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="content" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.eventManage.controller.ReservationPageController">
+   <children>
+      <ImageView fx:id="imageView" fitHeight="700.0" fitWidth="900.0" pickOnBounds="true">
+         <image>
+            <Image url="@../image/simple7.jpeg" />
+         </image>
+      </ImageView>
+      <Label layoutX="299.0" layoutY="38.0" prefHeight="66.0" prefWidth="301.0" text="Reservation">
+         <font>
+            <Font name="Britannic Bold" size="54.0" />
+         </font>
+      </Label>
+      <Label layoutX="145.0" layoutY="142.0" prefHeight="30.0" prefWidth="151.0" text="Reservation Id       :">
+         <font>
+            <Font name="Britannic Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="145.0" layoutY="186.0" prefHeight="30.0" prefWidth="151.0" text="Reservation Date   :">
+         <font>
+            <Font name="Britannic Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="145.0" layoutY="229.0" prefHeight="30.0" prefWidth="151.0" text="Event Venue           :">
+         <font>
+            <Font name="Britannic Bold" size="16.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="picReservationDate" layoutX="303.0" layoutY="187.0" prefHeight="27.0" prefWidth="342.0" style="-fx-border-color: black;" />
+      <TextField fx:id="txtVenue" layoutX="303.0" layoutY="230.0" prefHeight="27.0" prefWidth="342.0" style="-fx-border-color: black;" />
+      <Button layoutX="90.0" layoutY="385.0" mnemonicParsing="false" onAction="#acHome" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #142171;" text="Home" textFill="WHITE" />
+      <Button layoutX="207.0" layoutY="385.0" mnemonicParsing="false" onAction="#acRefresh" prefHeight="30.0" prefWidth="74.0" style="-fx-background-color: #19619c;" text="Refresh" textFill="WHITE" />
+      <Button fx:id="btnSave" layoutX="468.0" layoutY="385.0" mnemonicParsing="false" onAction="#acSave" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #2ecc71; -fx-border-color: black;" text="Save" textFill="WHITE" />
+      <Button fx:id="btnUpdate" layoutX="601.0" layoutY="385.0" mnemonicParsing="false" onAction="#acUpdate" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #546fbf; -fx-border-color: black;" text="Update" textFill="WHITE" />
+      <Button fx:id="btnDelete" layoutX="740.0" layoutY="385.0" mnemonicParsing="false" onAction="#acDelete" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #e74c3c; -fx-border-color: black;" text="Delete" textFill="WHITE" />
+      <TableView fx:id="tblReservation" layoutX="36.0" layoutY="437.0" onMouseClicked="#tblReservationAction" prefHeight="252.0" prefWidth="833.0">
+        <columns>
+          <TableColumn fx:id="colReservationId" prefWidth="217.59996795654297" text="Reservation Id" />
+          <TableColumn fx:id="colReservationDate" minWidth="0.0" prefWidth="219.20004272460938" text="Reservation Date" />
+            <TableColumn fx:id="colEventVenue" prefWidth="219.20010375976562" text="Event Venue" />
+            <TableColumn fx:id="colEventId" prefWidth="177.5999755859375" text="Event Id" />
+        </columns>
+      </TableView>
+      <Label layoutX="145.0" layoutY="275.0" prefHeight="30.0" prefWidth="151.0" text="Event Id                 : ">
+         <font>
+            <Font name="Britannic Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblEventId" layoutX="304.0" layoutY="277.0" prefHeight="26.0" prefWidth="342.0" style="-fx-background-color: white; -fx-border-color: black; -fx-background-radius: 3;" />
+      <Button fx:id="btnAdd" layoutX="713.0" layoutY="277.0" mnemonicParsing="false" onAction="#addAc" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: #1a2384;" text="Add Event" textFill="WHITE" />
+      <Label fx:id="lblReservationId" layoutX="302.0" layoutY="144.0" prefHeight="26.0" prefWidth="342.0" style="-fx-background-color: white; -fx-border-color: black; -fx-background-radius: 3;" />
+      <Label fx:id="lblDate" layoutX="650.0" layoutY="187.0" prefHeight="26.0" prefWidth="235.0" style="-fx-background-color: white; -fx-border-color: black; -fx-background-radius: 3;" />
+   </children>
+</AnchorPane>

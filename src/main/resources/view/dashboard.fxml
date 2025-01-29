@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="content" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.eventManage.controller.DashboardController">
+   <children>
+      <ImageView fx:id="Image" fitHeight="700.0" fitWidth="900.0" opacity="0.46" pickOnBounds="true">
+         <image>
+            <Image url="@../image/dashboard.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="255.0" layoutY="38.0" text="DASH BOARD">
+         <font>
+            <Font name="Britannic Bold" size="67.0" />
+         </font>
+      </Label>
+      <Button fx:id="eventBtn" layoutX="148.0" layoutY="211.0" mnemonicParsing="false" onAction="#eventAc" prefHeight="46.0" prefWidth="190.0" style="-fx-background-color: #19215e; -fx-background-radius: 12;" text="EVENT" textFill="WHITE">
+         <font>
+            <Font name="Britannic Bold" size="21.0" />
+         </font>
+      </Button>
+      <Button fx:id="reservation" layoutX="603.0" layoutY="329.0" mnemonicParsing="false" onAction="#reservationAc" prefHeight="46.0" prefWidth="190.0" style="-fx-background-color: #19215e; -fx-background-radius: 12;" text="RESERVATION" textFill="WHITE">
+         <font>
+            <Font name="Britannic Bold" size="21.0" />
+         </font>
+      </Button>
+      <Button fx:id="sponsors" layoutX="148.0" layoutY="330.0" mnemonicParsing="false" onAction="#sponsorsAc" prefHeight="46.0" prefWidth="190.0" style="-fx-background-color: #19215e; -fx-background-radius: 12;" text="SPONSORS" textFill="WHITE">
+         <font>
+            <Font name="Britannic Bold" size="21.0" />
+         </font>
+      </Button>
+      <Button fx:id="ticket" layoutX="148.0" layoutY="450.0" mnemonicParsing="false" onAction="#ticketAc" prefHeight="46.0" prefWidth="190.0" style="-fx-background-color: #19215e; -fx-background-radius: 12;" text="TICKET" textFill="WHITE">
+         <font>
+            <Font name="Britannic Bold" size="21.0" />
+         </font>
+      </Button>
+      <Button fx:id="student" layoutX="598.0" layoutY="211.0" mnemonicParsing="false" onAction="#studentAc" prefHeight="46.0" prefWidth="190.0" style="-fx-background-color: #19215e; -fx-background-radius: 12;" text="CUSTOMER" textFill="WHITE">
+         <font>
+            <Font name="Britannic Bold" size="21.0" />
+         </font>
+      </Button>
+      <Button fx:id="feedback" layoutX="148.0" layoutY="563.0" mnemonicParsing="false" onAction="#feedbackAc" prefHeight="46.0" prefWidth="190.0" style="-fx-background-color: #19215e; -fx-background-radius: 12;" text="FEEDBACK" textFill="WHITE">
+         <font>
+            <Font name="Britannic Bold" size="21.0" />
+         </font>
+      </Button>
+      <Button fx:id="payment" layoutX="606.0" layoutY="447.0" mnemonicParsing="false" onAction="#paymentAc" prefHeight="46.0" prefWidth="190.0" style="-fx-background-color: #19215e; -fx-background-radius: 12;" text="PAYMENT" textFill="WHITE">
+         <font>
+            <Font name="Britannic Bold" size="21.0" />
+         </font>
+      </Button>
+      <Button fx:id="user" layoutX="606.0" layoutY="562.0" mnemonicParsing="false" onAction="#userAc" prefHeight="46.0" prefWidth="190.0" style="-fx-background-color: #19215e; -fx-background-radius: 12;" text="USERS" textFill="WHITE">
+         <font>
+            <Font name="Britannic Bold" size="21.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnLogout" layoutX="761.0" layoutY="643.0" mnemonicParsing="false" onAction="#logoutAc" prefHeight="31.0" prefWidth="107.0" style="-fx-background-color: red; -fx-background-radius: 12;" text="Log Out" textFill="WHITE">
+         <font>
+            <Font name="Britannic Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
