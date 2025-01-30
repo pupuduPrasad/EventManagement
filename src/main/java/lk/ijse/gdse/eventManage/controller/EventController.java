@@ -12,6 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.eventManage.bo.BOFactory;
+import lk.ijse.gdse.eventManage.bo.custom.EventBo;
 import lk.ijse.gdse.eventManage.dto.EventDto;
 import lk.ijse.gdse.eventManage.dto.tm.EventTm;
 import lk.ijse.gdse.eventManage.dao.custom.impl.EventDAOImpl;
@@ -86,6 +88,7 @@ public class EventController implements Initializable {
     @FXML
     private AnchorPane content;
 
+    private final EventBo eventBo= (EventBo) BOFactory.getInstance().getBO(BOFactory.BOType.EVENT);
     @FXML
     void deleteAction(ActionEvent event) throws Exception {
         String eventId = lblEventId.getText();
@@ -95,7 +98,7 @@ public class EventController implements Initializable {
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
 
-            boolean isDeleted = eventDAOImpl.delete(eventId);
+            boolean isDeleted = eventBo.delete(eventId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Event deleted...!").show();
@@ -127,7 +130,7 @@ public class EventController implements Initializable {
 
         EventDto eventDto = new EventDto(eventId, eventName, eventFaculty, description, date, time);
 
-        boolean isSaved = eventDAOImpl.save(eventDto);
+        boolean isSaved = eventBo.save(eventDto);
 
         if (isSaved) {
             refreshPage();
@@ -163,7 +166,7 @@ public class EventController implements Initializable {
         try {
             Date dateD = formatter.parse(date);
             EventDto eventDto = new EventDto(eventId, eventName, eventFaculty, description, dateD, time);
-            boolean isUpdated = eventDAOImpl.update(eventDto);
+            boolean isUpdated = eventBo.update(eventDto);
 
             if (isUpdated) {
                 refreshPage();
@@ -213,10 +216,10 @@ public class EventController implements Initializable {
         lblDate.setText("");
     }
 
-    EventDAOImpl eventDAOImpl = new EventDAOImpl();
+//    EventDAOImpl eventDAOImpl = new EventDAOImpl();
 
     private void loadTableData() throws Exception {
-        ArrayList<EventDto> eventDtos = eventDAOImpl.getAll();
+        ArrayList<EventDto> eventDtos = eventBo.getAll();
 
         ObservableList<EventTm> eventTms = FXCollections.observableArrayList();
 
@@ -229,7 +232,7 @@ public class EventController implements Initializable {
     }
 
     private void getNextEventId() throws Exception {
-        String nextEventId = eventDAOImpl.getNextId();
+        String nextEventId = eventBo.getNextId();
         lblEventId.setText(nextEventId);
     }
 

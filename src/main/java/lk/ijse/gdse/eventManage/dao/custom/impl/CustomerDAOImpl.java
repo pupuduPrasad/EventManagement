@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAOImpl implements CustomerDAO {
-
+    @Override
     public String getNextId() throws SQLException {
         ResultSet rst = CrudUtil.execute("SELECT custId FROM customer ORDER BY custId DESC LIMIT 1");
 

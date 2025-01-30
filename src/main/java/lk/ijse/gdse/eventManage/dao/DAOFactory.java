@@ -2,6 +2,7 @@ package lk.ijse.gdse.eventManage.dao;
 
 import lk.ijse.gdse.eventManage.dao.custom.CustomerDAO;
 import lk.ijse.gdse.eventManage.dao.custom.impl.CustomerDAOImpl;
+import lk.ijse.gdse.eventManage.dao.custom.impl.EventDAOImpl;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
@@ -11,12 +12,14 @@ public class DAOFactory {
         return daoFactory==null?daoFactory=new DAOFactory():daoFactory;
     }
     public enum DAOType {
-        CUSTOMER,EVENT,FEEDBACK,PAYMENT,RESERVATION,SPONSOREVENT,SPONSOR,TICKET,USER
+        CUSTOMER,EVENT
         }
     public SuperDAO getDAO(DAOType type) {
         switch (type){
             case CUSTOMER:
                 return new CustomerDAOImpl();
+            case EVENT:
+                    return new EventDAOImpl();
                 default:
                     return null;
 

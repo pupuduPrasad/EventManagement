@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EventDAOImpl implements EventDAO {
+    @Override
     public String getNextId() throws SQLException {
         ResultSet rst = CrudUtil.execute("select eventId from event order by eventId desc limit 1");
 
