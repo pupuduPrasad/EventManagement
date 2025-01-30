@@ -1,9 +1,7 @@
-package lk.ijse.gdse.eventManage.model;
+package lk.ijse.gdse.eventManage.dao;
 
-import lk.ijse.gdse.eventManage.dto.ReservationDto;
 import lk.ijse.gdse.eventManage.dto.SponserAndEventDto;
 import lk.ijse.gdse.eventManage.dto.SponsorDto;
-import lk.ijse.gdse.eventManage.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

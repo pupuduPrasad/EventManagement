@@ -18,12 +18,11 @@ import lk.ijse.gdse.eventManage.dto.EventSponsorsDto;
 import lk.ijse.gdse.eventManage.dto.SponserAndEventDto;
 import lk.ijse.gdse.eventManage.dto.SponsorDto;
 import lk.ijse.gdse.eventManage.dto.tm.SponsorTm;
-import lk.ijse.gdse.eventManage.model.SponsorEventModel;
-import lk.ijse.gdse.eventManage.model.SponsorModel;
+import lk.ijse.gdse.eventManage.dao.SponsorEventModel;
+import lk.ijse.gdse.eventManage.dao.SponsorModel;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;

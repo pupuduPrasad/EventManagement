@@ -1,11 +1,7 @@
-package lk.ijse.gdse.eventManage.model;
+package lk.ijse.gdse.eventManage.dao;
 
-import lk.ijse.gdse.eventManage.db.DBConnection;
 import lk.ijse.gdse.eventManage.dto.TicketDto;
-import lk.ijse.gdse.eventManage.util.CrudUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

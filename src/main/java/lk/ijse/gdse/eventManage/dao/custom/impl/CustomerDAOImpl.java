@@ -1,8 +1,9 @@
-package lk.ijse.gdse.eventManage.model;
+package lk.ijse.gdse.eventManage.dao.custom.impl;
 
+import lk.ijse.gdse.eventManage.dao.custom.CustomerDAO;
 import lk.ijse.gdse.eventManage.db.DBConnection;
 import lk.ijse.gdse.eventManage.dto.CustomerDto;
-import lk.ijse.gdse.eventManage.util.CrudUtil;
+import lk.ijse.gdse.eventManage.dao.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerModel {
+public class CustomerDAOImpl implements CustomerDAO {
 
-    public String getNextCustomerId() throws SQLException {
+    public String getNextId() throws SQLException {
         ResultSet rst = CrudUtil.execute("SELECT custId FROM customer ORDER BY custId DESC LIMIT 1");
 
         if (rst.next()) {
@@ -25,7 +26,7 @@ public class CustomerModel {
         return "C001";
     }
 
-    public boolean saveCustomer(CustomerDto customerDto) throws SQLException {
+    public boolean save(CustomerDto customerDto) throws SQLException {
         return CrudUtil.execute(
                 "INSERT INTO customer VALUES (?, ?, ?)",
                 customerDto.getCustId(),
@@ -34,16 +35,16 @@ public class CustomerModel {
         );
     }
 
-    public boolean updateCustomer(CustomerDto customerDto) throws SQLException {
+    public boolean update(CustomerDto customerDto) throws SQLException {
         return CrudUtil.execute(
-                "UPDATE customer SET custId=?, customer=? WHERE custId=?",
-                customerDto.getCustId(),
+                "UPDATE customer SET name=? ,coNumber =? WHERE custId=?",
                 customerDto.getName(),
-                customerDto.getCoNumber()
-        );
+                String.valueOf(customerDto.getCoNumber()),
+                customerDto.getCustId()
+                );
     }
 
-    public boolean deleteCustomer(String custId) throws SQLException {
+    public boolean delete(String custId) throws SQLException {
         return CrudUtil.execute("DELETE FROM customer WHERE custId=?", custId);
     }
 
@@ -61,7 +62,7 @@ public class CustomerModel {
         }
         return feedbackList;
     }
-    public ArrayList<CustomerDto> getAllCustomers() throws SQLException {
+    public ArrayList<CustomerDto> getAll() throws SQLException {
         Connection connection = DBConnection.getInstance().getConnection();
         String query = "SELECT * FROM customer";
         PreparedStatement statement = connection.prepareStatement(query);

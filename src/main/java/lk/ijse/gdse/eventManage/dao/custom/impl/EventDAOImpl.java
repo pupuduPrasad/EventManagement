@@ -1,14 +1,15 @@
-package lk.ijse.gdse.eventManage.model;
+package lk.ijse.gdse.eventManage.dao.custom.impl;
 
+import lk.ijse.gdse.eventManage.dao.CrudUtil;
+import lk.ijse.gdse.eventManage.dao.custom.EventDAO;
 import lk.ijse.gdse.eventManage.dto.EventDto;
-import lk.ijse.gdse.eventManage.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class EventModel {
-    public String getNextEventId() throws SQLException {
+public class EventDAOImpl implements EventDAO {
+    public String getNextId() throws SQLException {
         ResultSet rst = CrudUtil.execute("select eventId from event order by eventId desc limit 1");
 
         if (rst.next()) {
@@ -21,19 +22,19 @@ public class EventModel {
         return "E001";
     }
 
-    public boolean saveEvent(EventDto eventDto) throws SQLException {
+    public boolean save(EventDto eventDto) throws SQLException {
         return CrudUtil.execute("insert into event values(?,?,?,?,?,?)", eventDto.getEventId(), eventDto.getEventName(), eventDto.getEventFaculty(), eventDto.getDescription(), eventDto.getDate(), eventDto.getTime());
     }
 
-    public boolean updateEvent(EventDto eventDto) throws SQLException {
+    public boolean update(EventDto eventDto) throws SQLException {
         return CrudUtil.execute("update event set eventName=?, eventFaculty=?, description=?, date=?, time=? where eventId=?", eventDto.getEventName(), eventDto.getEventFaculty(), eventDto.getDescription(), eventDto.getDate(), eventDto.getTime(), eventDto.getEventId());
     }
 
-    public boolean deleteEvent(String eventId) throws SQLException {
+    public boolean delete(String eventId) throws SQLException {
         return CrudUtil.execute("delete from event where eventId=?", eventId);
     }
 
-    public ArrayList<EventDto> getAllEvents() throws SQLException {
+    public ArrayList<EventDto> getAll() throws SQLException {
         ResultSet rst = CrudUtil.execute("select * from event");
 
         ArrayList<EventDto> eventDtos = new ArrayList<>();

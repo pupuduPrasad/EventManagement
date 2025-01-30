@@ -1,10 +1,9 @@
 package lk.ijse.gdse.eventManage.controller;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse.eventManage.dto.UserDto;
-import lk.ijse.gdse.eventManage.model.UserModel;
+import lk.ijse.gdse.eventManage.dao.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

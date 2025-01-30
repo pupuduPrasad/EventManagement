@@ -14,11 +14,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse.eventManage.dto.EventDto;
 import lk.ijse.gdse.eventManage.dto.tm.EventTm;
-import lk.ijse.gdse.eventManage.model.EventModel;
+import lk.ijse.gdse.eventManage.dao.custom.impl.EventDAOImpl;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -97,7 +95,7 @@ public class EventController implements Initializable {
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
 
-            boolean isDeleted = eventModel.deleteEvent(eventId);
+            boolean isDeleted = eventDAOImpl.delete(eventId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Event deleted...!").show();
@@ -129,7 +127,7 @@ public class EventController implements Initializable {
 
         EventDto eventDto = new EventDto(eventId, eventName, eventFaculty, description, date, time);
 
-        boolean isSaved = eventModel.saveEvent(eventDto);
+        boolean isSaved = eventDAOImpl.save(eventDto);
 
         if (isSaved) {
             refreshPage();
@@ -165,7 +163,7 @@ public class EventController implements Initializable {
         try {
             Date dateD = formatter.parse(date);
             EventDto eventDto = new EventDto(eventId, eventName, eventFaculty, description, dateD, time);
-            boolean isUpdated = eventModel.updateEvent(eventDto);
+            boolean isUpdated = eventDAOImpl.update(eventDto);
 
             if (isUpdated) {
                 refreshPage();
@@ -215,10 +213,10 @@ public class EventController implements Initializable {
         lblDate.setText("");
     }
 
-    EventModel eventModel = new EventModel();
+    EventDAOImpl eventDAOImpl = new EventDAOImpl();
 
     private void loadTableData() throws Exception {
-        ArrayList<EventDto> eventDtos = eventModel.getAllEvents();
+        ArrayList<EventDto> eventDtos = eventDAOImpl.getAll();
 
         ObservableList<EventTm> eventTms = FXCollections.observableArrayList();
 
@@ -231,7 +229,7 @@ public class EventController implements Initializable {
     }
 
     private void getNextEventId() throws Exception {
-        String nextEventId = eventModel.getNextEventId();
+        String nextEventId = eventDAOImpl.getNextId();
         lblEventId.setText(nextEventId);
     }
 

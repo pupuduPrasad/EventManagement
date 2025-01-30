@@ -10,12 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse.eventManage.dto.FeedbackDto;
-import lk.ijse.gdse.eventManage.dto.tm.FeedbackTm;
-import lk.ijse.gdse.eventManage.model.FeedbackModel;
+import lk.ijse.gdse.eventManage.dao.FeedbackModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.Optional;
 
 public class FeedBackController {

@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import lk.ijse.gdse.eventManage.dto.EventDto;
 import lk.ijse.gdse.eventManage.dto.tm.EventTm;
-import lk.ijse.gdse.eventManage.model.EventModel;
+import lk.ijse.gdse.eventManage.dao.custom.impl.EventDAOImpl;
 import lombok.Setter;
 
 import java.net.URL;
@@ -107,7 +107,7 @@ public class AddEventController implements Initializable {
         }
     }
 
-    EventModel eventModel = new EventModel();
+    EventDAOImpl eventDAOImpl = new EventDAOImpl();
 
     private void refreshPage() throws Exception {
         loadTableData();
@@ -116,7 +116,7 @@ public class AddEventController implements Initializable {
     }
 
     private void loadTableData() throws Exception {
-        ArrayList<EventDto> customerDTOS = eventModel.getAllEvents();
+        ArrayList<EventDto> customerDTOS = eventDAOImpl.getAll();
 
         ObservableList<EventTm> eventTms = FXCollections.observableArrayList();
 

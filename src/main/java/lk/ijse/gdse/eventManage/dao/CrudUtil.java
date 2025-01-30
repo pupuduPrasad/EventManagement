@@ -1,4 +1,4 @@
-package lk.ijse.gdse.eventManage.util;
+package lk.ijse.gdse.eventManage.dao;
 
 import lk.ijse.gdse.eventManage.db.DBConnection;
 

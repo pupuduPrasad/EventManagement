@@ -10,18 +10,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.eventManage.bo.BOFactory;
+import lk.ijse.gdse.eventManage.bo.custom.CustomerBO;
+import lk.ijse.gdse.eventManage.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.gdse.eventManage.dto.CustomerDto;
-import lk.ijse.gdse.eventManage.dto.EventDto;
 import lk.ijse.gdse.eventManage.dto.tm.CustomerTm;
-import lk.ijse.gdse.eventManage.dto.tm.EventTm;
-import lk.ijse.gdse.eventManage.model.CustomerModel;
+import lk.ijse.gdse.eventManage.dao.custom.impl.CustomerDAOImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Optional;
 
 public class CustomerController {
@@ -62,8 +60,8 @@ public class CustomerController {
     @FXML
     private TextField txtNumber;
 
-    private final CustomerModel customerModel = new CustomerModel();
-
+//    private final CustomerDAOImpl customerDAOImpl = new CustomerDAOImpl();
+    private final CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
     @FXML
     void acCustomer(MouseEvent event) {
         CustomerTm customerTm = tblCustomer.getSelectionModel().getSelectedItem();
@@ -84,7 +82,7 @@ public class CustomerController {
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
 
-            boolean isDeleted = customerModel.deleteCustomer(custId);
+            boolean isDeleted = customerBO.delete(custId);
             if (isDeleted) {
                 refreshTable();
                 new Alert(Alert.AlertType.INFORMATION, "Event deleted...!").show();
@@ -93,26 +91,6 @@ public class CustomerController {
             }
         }
     }
-
-    @FXML
-    void acSave(ActionEvent event) throws Exception {
-        String custId = lblCustomer.getText();
-        String name = txtName.getText().trim();
-        int coNumber = Integer.parseInt(txtNumber.getText().trim());
-
-        CustomerDto customerDto = new CustomerDto(custId,name,coNumber);
-
-        boolean isSaved = customerModel.saveCustomer(customerDto);
-
-        if (isSaved) {
-            refreshTable();
-            new Alert(Alert.AlertType.INFORMATION, "Event Saved").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Event Not Saved").show();
-        }
-    }
-
-
     @FXML
     void acUpdate(ActionEvent event) {
         CustomerTm selectedCustomer = tblCustomer.getSelectionModel().getSelectedItem();
@@ -135,7 +113,37 @@ public class CustomerController {
 
             CustomerDto updatedCustomer = new CustomerDto(selectedCustomer.getCustId(), name, number);
 
-            boolean isUpdated = customerModel.updateCustomer(updatedCustomer);
+            boolean isUpdated = customerBO.update(updatedCustomer);
+            if (isUpdated) {
+                refreshTable();
+                showAlert(Alert.AlertType.INFORMATION, "Customer updated successfully.");
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Failed to update customer.");
+            }
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Invalid number format. Please enter a valid integer.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Database error: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    void acSave(ActionEvent event) throws Exception {
+        String custId = lblCustomer.getText();
+        String name = txtName.getText().trim();
+        int coNumber = Integer.parseInt(txtNumber.getText().trim());
+
+        CustomerDto customerDto = new CustomerDto(custId,name,coNumber);
+
+        try {
+            int number = Integer.parseInt(String.valueOf(coNumber));
+
+            CustomerDto updatedCustomer = new CustomerDto(customerDto.getCustId(), name, number);
+
+            boolean isUpdated = customerBO.update(updatedCustomer);
             if (isUpdated) {
                 refreshTable();
                 showAlert(Alert.AlertType.INFORMATION, "Customer updated successfully.");
@@ -197,7 +205,7 @@ public class CustomerController {
         }
     }
     private void getNextCustomerId() throws Exception {
-        String nextEventId = customerModel.getNextCustomerId();
+        String nextEventId = customerBO.getNextId();
         lblCustomer.setText(nextEventId);
     }
 
@@ -217,7 +225,7 @@ public class CustomerController {
     }
 
     private void loadTableData() throws Exception {
-        ArrayList<CustomerDto> customerDTOS = customerModel.getAllCustomers();
+        ArrayList<CustomerDto> customerDTOS = customerBO.getAll();
 
         ObservableList<CustomerTm> customerTms = FXCollections.observableArrayList();
 

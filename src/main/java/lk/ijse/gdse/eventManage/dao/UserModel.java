@@ -1,7 +1,6 @@
-package lk.ijse.gdse.eventManage.model;
+package lk.ijse.gdse.eventManage.dao;
 
 import lk.ijse.gdse.eventManage.dto.UserDto;
-import lk.ijse.gdse.eventManage.util.CrudUtil;
 import lk.ijse.gdse.eventManage.db.DBConnection;
 
 import java.sql.PreparedStatement;

@@ -16,10 +16,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import lk.ijse.gdse.eventManage.dto.EventDto;
 import lk.ijse.gdse.eventManage.dto.ReservationDto;
 import lk.ijse.gdse.eventManage.dto.tm.ReservationTm;
-import lk.ijse.gdse.eventManage.model.ReservationModel;
+import lk.ijse.gdse.eventManage.dao.ReservationModel;
 import lombok.Setter;
 
 

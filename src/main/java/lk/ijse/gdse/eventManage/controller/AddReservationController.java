@@ -11,9 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import lk.ijse.gdse.eventManage.dto.ReservationDto;
-import lk.ijse.gdse.eventManage.dto.tm.EventTm;
 import lk.ijse.gdse.eventManage.dto.tm.ReservationTm;
-import lk.ijse.gdse.eventManage.model.ReservationModel;
+import lk.ijse.gdse.eventManage.dao.ReservationModel;
 import lombok.Setter;
 
 import java.net.URL;
