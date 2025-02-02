@@ -41,7 +41,13 @@ public class EventDAOImpl implements EventDAO {
         ArrayList<EventDto> eventDtos = new ArrayList<>();
 
         while (rst.next()) {
-            EventDto eventDto = new EventDto(rst.getString(1), rst.getString(2), rst.getString(3), rst.getString(4), rst.getDate(5), rst.getString(6));
+            EventDto eventDto = new EventDto(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getDate(5),
+                    rst.getString(6));
             eventDtos.add(eventDto);
         }
         return eventDtos;

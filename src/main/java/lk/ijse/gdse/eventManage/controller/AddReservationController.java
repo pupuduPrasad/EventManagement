@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import lk.ijse.gdse.eventManage.dto.ReservationDto;
 import lk.ijse.gdse.eventManage.dto.tm.ReservationTm;
-import lk.ijse.gdse.eventManage.dao.ReservationModel;
+import lk.ijse.gdse.eventManage.dao.custom.impl.ReservationDAOImpl;
 import lombok.Setter;
 
 import java.net.URL;
@@ -67,7 +67,7 @@ public class AddReservationController implements Initializable {
         }
     }
 
-    ReservationModel reservationModel = new ReservationModel();
+    ReservationDAOImpl reservationDAOImpl = new ReservationDAOImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,7 +89,7 @@ public class AddReservationController implements Initializable {
     }
 
     private void loadTableData() throws Exception {
-        ArrayList<ReservationDto> reservationDtos = reservationModel.getAllReservation();
+        ArrayList<ReservationDto> reservationDtos = reservationDAOImpl.getAll();
 
         ObservableList<ReservationTm> reservationTms = FXCollections.observableArrayList();
 

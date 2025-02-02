@@ -9,8 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.eventManage.bo.BOFactory;
+import lk.ijse.gdse.eventManage.bo.custom.FeedbackBO;
 import lk.ijse.gdse.eventManage.dto.FeedbackDto;
-import lk.ijse.gdse.eventManage.dao.FeedbackModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -54,8 +55,8 @@ public class FeedBackController {
     @FXML
     private Label lblFeedbackId;
 
-    FeedbackModel feedbackModel = new FeedbackModel();
-
+//    FeedbackDAOImpl feedbackDAOImpl = new FeedbackDAOImpl();
+    private final FeedbackBO feedbackBo = (FeedbackBO) BOFactory.getInstance().getBO(BOFactory.BOType.FEEDBACK);
     @FXML
     void DeleteFeedBack(ActionEvent event) throws Exception {
         String fId = lblFeedbackId.getText();
@@ -66,7 +67,7 @@ public class FeedBackController {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = feedbackModel.deleteFeedback(fId);
+            boolean isDeleted = feedbackBo.delete(fId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Feedback deleted successfully!").show();
@@ -84,8 +85,7 @@ public class FeedBackController {
 
 
         FeedbackDto feedbackDto = new FeedbackDto(fId, comment,custId);
-
-        boolean isUpdated = feedbackModel.updateFeedback(feedbackDto);
+        boolean isUpdated = feedbackBo.update(feedbackDto);
 
         if (isUpdated) {
             refreshPage();
@@ -103,7 +103,7 @@ public class FeedBackController {
     }
 
     private void getNextFeedbackId() throws SQLException {
-        String nextFeedbackId = feedbackModel.getNextFeedbackId();
+        String nextFeedbackId = feedbackBo.getNextId();
         lblFeedbackId.setText(nextFeedbackId);
 
     }
@@ -116,7 +116,7 @@ public class FeedBackController {
 
         FeedbackDto feedbackDto = new FeedbackDto(fId, comment, custId);
 
-        boolean isSaved = feedbackModel.saveFeedback(feedbackDto);
+        boolean isSaved = feedbackBo.save(feedbackDto);
 
         if (isSaved) {
             refreshPage();
@@ -162,7 +162,7 @@ public class FeedBackController {
     }
 
     private void loadTableData() throws SQLException {
-        ObservableList<FeedbackDto> feedbackList = FXCollections.observableArrayList(feedbackModel.getAllFeedback());
+        ObservableList<FeedbackDto> feedbackList = FXCollections.observableArrayList(feedbackBo.getAll());
         tblFeedBack.setItems(feedbackList);
     }
 

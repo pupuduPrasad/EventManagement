@@ -205,8 +205,8 @@ public class CustomerController {
         }
     }
     private void getNextCustomerId() throws Exception {
-        String nextEventId = customerBO.getNextId();
-        lblCustomer.setText(nextEventId);
+        String nextCustomerId = customerBO.getNextId();
+        lblCustomer.setText(nextCustomerId);
     }
 
     public void navigateTo(String fxmlPath) {

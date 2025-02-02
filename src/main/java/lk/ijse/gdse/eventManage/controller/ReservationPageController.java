@@ -16,9 +16,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.gdse.eventManage.bo.BOFactory;
+import lk.ijse.gdse.eventManage.bo.custom.ReservationBO;
+import lk.ijse.gdse.eventManage.bo.custom.impl.ReservationBOImpl;
 import lk.ijse.gdse.eventManage.dto.ReservationDto;
 import lk.ijse.gdse.eventManage.dto.tm.ReservationTm;
-import lk.ijse.gdse.eventManage.dao.ReservationModel;
+import lk.ijse.gdse.eventManage.dao.custom.impl.ReservationDAOImpl;
 import lombok.Setter;
 
 
@@ -90,25 +93,24 @@ public class ReservationPageController implements Initializable {
     @Setter
     ReservationPageController reservationPageController;
 
-    ReservationModel reservationModel = new ReservationModel();
-
+//    ReservationDAOImpl reservationDAOImpl = new ReservationDAOImpl();
+    private final ReservationBO reservationBO = (ReservationBO) BOFactory.getInstance().getBO(BOFactory.BOType.RESERVATION);
     @FXML
     void acDelete(ActionEvent event) throws Exception {
-        String reservationId = lblEventId.getText();
+        String rId = lblReservationId.getText();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-
-            boolean isDeleted = reservationModel.deleteReservation(reservationId);
-            if (isDeleted) {
-                refreshPage();
-                new Alert(Alert.AlertType.INFORMATION, "Reservation deleted...!").show();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Fail to delete Reservation...!").show();
+                boolean isDeleted = reservationBO.delete(rId);
+                if (isDeleted) {
+                    refreshPage();
+                    new Alert(Alert.AlertType.INFORMATION, "Reservation deleted...!").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Fail to delete Reservation...!").show();
+                }
             }
-        }
 
     }
 
@@ -166,7 +168,7 @@ public class ReservationPageController implements Initializable {
 
         ReservationDto reservationDto = new ReservationDto(rId, date, eventVenue, eventId);
 
-        boolean isSaved = reservationModel.saveReservation(reservationDto);
+        boolean isSaved = reservationBO.save(reservationDto);
 
         if (isSaved) {
             refreshPage();
@@ -189,7 +191,7 @@ public class ReservationPageController implements Initializable {
         try {
             Date dateD = formatter.parse(date);
             ReservationDto reservationDto = new ReservationDto(rId ,dateD, eventVenue,eventId);
-            boolean isUpdated = reservationModel.updateReservation(reservationDto);
+            boolean isUpdated = reservationBO.update(reservationDto);
 
             if (isUpdated) {
                 refreshPage();
@@ -236,7 +238,7 @@ public class ReservationPageController implements Initializable {
 
     }
     private void loadTableData() throws Exception {
-        ArrayList<ReservationDto> reservationDtos = reservationModel.getAllReservation();
+        ArrayList<ReservationDto> reservationDtos = reservationBO.getAll();
 
         ObservableList<ReservationTm> reservationTms = FXCollections.observableArrayList();
 
@@ -249,7 +251,7 @@ public class ReservationPageController implements Initializable {
     }
 
     private void getNextReservationId() throws Exception {
-        String nextReservationId = reservationModel.getNextReservationId();
+        String nextReservationId = reservationBO.getNextId();
         lblReservationId.setText(nextReservationId);
     }
 

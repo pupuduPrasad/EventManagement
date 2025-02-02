@@ -1,13 +1,16 @@
-package lk.ijse.gdse.eventManage.dao;
+package lk.ijse.gdse.eventManage.dao.custom.impl;
 
+import lk.ijse.gdse.eventManage.dao.CrudUtil;
+import lk.ijse.gdse.eventManage.dao.custom.ReservationDAO;
 import lk.ijse.gdse.eventManage.dto.ReservationDto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ReservationModel {
-    public String getNextReservationId() throws SQLException {
+public class ReservationDAOImpl implements ReservationDAO {
+    @Override
+    public String getNextId() throws SQLException {
         ResultSet rst = CrudUtil.execute("select rId from reservation order by rId desc limit 1");
 
         if (rst.next()) {
@@ -20,21 +23,20 @@ public class ReservationModel {
         return "R001";
     }
 
-    public boolean saveReservation(ReservationDto reservationDto) throws SQLException {
+    public boolean save(ReservationDto reservationDto) throws SQLException {
         return CrudUtil.execute("insert into reservation values(?,?,?,?)", reservationDto.getRId(), reservationDto.getDate(), reservationDto.getEventVenue(), reservationDto.getEventId());
     }
 
-    public boolean updateReservation(ReservationDto reservationDto) throws SQLException {
+    public boolean update(ReservationDto reservationDto) throws SQLException {
         return CrudUtil.execute("update reservation set date=?, eventVenue=?, eventId=? where rId=?", reservationDto.getDate(), reservationDto.getEventVenue(), reservationDto.getEventId(), reservationDto.getRId());
     }
 
-    public boolean deleteReservation(String reservationId) throws SQLException {
-        return CrudUtil.execute("delete from reservation where rId=?", reservationId);
+    public boolean delete(String rId) throws SQLException {
+        return CrudUtil.execute("delete from reservation where rId=?", rId);
     }
 
-    public ArrayList<ReservationDto> getAllReservation() throws SQLException {
+    public ArrayList<ReservationDto> getAll() throws SQLException {
         ResultSet rst = CrudUtil.execute("select * from reservation");
-
         ArrayList<ReservationDto> reservationDtos = new ArrayList<>();
 
         while (rst.next()) {
