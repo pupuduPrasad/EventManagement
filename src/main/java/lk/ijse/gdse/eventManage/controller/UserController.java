@@ -2,8 +2,11 @@ package lk.ijse.gdse.eventManage.controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.eventManage.bo.BOFactory;
+import lk.ijse.gdse.eventManage.bo.custom.UserBO;
+import lk.ijse.gdse.eventManage.bo.custom.impl.UserBOImpl;
 import lk.ijse.gdse.eventManage.dto.UserDto;
-import lk.ijse.gdse.eventManage.dao.UserModel;
+import lk.ijse.gdse.eventManage.dao.custom.impl.UserDAOImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,6 +44,8 @@ public class UserController implements Initializable {
     @Setter
     private DashboardController dashboardController;
 
+    private final UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
+
     @FXML
     void addUserOnAction(ActionEvent event) throws SQLException {
         String userName = txtUsername.getText().trim();
@@ -52,7 +57,7 @@ public class UserController implements Initializable {
             return;
         }
 
-        if (userModel.isUserNameExists(userName)) {
+        if (userBO.isUserNameExists(userName)) {
             new Alert(Alert.AlertType.ERROR, "Username already exists. Please choose a different username.").show();
             return;
         }
@@ -68,7 +73,7 @@ public class UserController implements Initializable {
         }
 
         UserDto userDto = new UserDto(userName, password);
-        boolean isSaved = userModel.saveUser(userDto);
+        boolean isSaved = userBO.save(userDto);
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "User saved...!").show();
@@ -86,7 +91,7 @@ public class UserController implements Initializable {
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
 
-            boolean isDeleted = userModel.deleteUser(userName);
+            boolean isDeleted = userBO.delete(userName);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "User deleted...!").show();
@@ -109,10 +114,10 @@ public class UserController implements Initializable {
         }
     }
 
-    UserModel userModel = new UserModel();
+//    UserDAOImpl userDAOImpl = new UserDAOImpl();
 
     private void loadUsernames() throws SQLException {
-        ArrayList<String> usernames = userModel.getAllUserNames();
+        ArrayList<String> usernames = userBO.getAllUserNames();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(usernames);
         cmbRemoveUser.setItems(observableList);

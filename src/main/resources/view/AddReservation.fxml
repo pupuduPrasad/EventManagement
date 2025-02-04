@@ -14,7 +14,7 @@
             <Font name="Arial Rounded MT Bold" size="36.0" />
          </font>
       </Label>
-      <TableView fx:id="tblReservation" layoutX="13.0" layoutY="147.0" onMouseClicked="#tblEventAction" prefHeight="238.0" prefWidth="574.0">
+      <TableView fx:id="tblReservation" layoutX="13.0" layoutY="147.0" onMouseClicked="#tblAction" prefHeight="238.0" prefWidth="574.0">
          <columns>
             <TableColumn fx:id="colReservationId" prefWidth="75.0" text="Reservation ID " />
             <TableColumn fx:id="colDate" prefWidth="75.0" text="Reservation Date" />

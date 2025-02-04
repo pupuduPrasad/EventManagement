@@ -12,9 +12,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.eventManage.bo.BOFactory;
+import lk.ijse.gdse.eventManage.bo.custom.TicketBO;
+import lk.ijse.gdse.eventManage.bo.custom.impl.TicketBOImpl;
 import lk.ijse.gdse.eventManage.dto.TicketDto;
 import lk.ijse.gdse.eventManage.dto.tm.TicketTm;
-import lk.ijse.gdse.eventManage.dao.TicketModel;
+import lk.ijse.gdse.eventManage.dao.custom.impl.TicketDAOImpl;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -69,6 +72,8 @@ public class TicketPageController implements Initializable {
     @FXML
     private TextField txtPrice;
 
+    private final TicketBO ticketBO = (TicketBO) BOFactory.getInstance().getBO(BOFactory.BOType.TICKET);
+
     @FXML
     void acDelete(ActionEvent event) throws Exception {
         String ticketId = lblId.getText();
@@ -77,7 +82,7 @@ public class TicketPageController implements Initializable {
         String eventId = lblEventId.getText();
 
         TicketDto ticketDto = new TicketDto(ticketId, price, custId, eventId);
-        boolean isDeleted =ticketModel .deleteTicket(ticketId);
+        boolean isDeleted = ticketBO.delete(ticketId);
 
         if (isDeleted) {
             refreshPage();
@@ -127,7 +132,7 @@ public class TicketPageController implements Initializable {
 
     }
 
-    TicketModel ticketModel=new TicketModel();
+//    TicketDAOImpl ticketDAOImpl =new TicketDAOImpl();
 
     @FXML
     void acSave(ActionEvent event) throws Exception {
@@ -140,7 +145,7 @@ public class TicketPageController implements Initializable {
 
         TicketDto ticketDto = new TicketDto(ticketId, price, custId, eventId);
 
-        boolean isSaved =ticketModel .saveTicket(ticketDto);
+        boolean isSaved = ticketBO.save(ticketDto);
 
         if (isSaved) {
             refreshPage();
@@ -161,7 +166,7 @@ public class TicketPageController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<TicketDto> ticketDtos = ticketModel.getAllTicket();
+        ArrayList<TicketDto> ticketDtos = ticketBO.getAll();
 
         ObservableList<TicketTm> ticketTms = FXCollections.observableArrayList();
 
@@ -174,7 +179,7 @@ public class TicketPageController implements Initializable {
     }
 
     private void getNextTicketId() throws Exception {
-            String nextTicketId = ticketModel.getNextTicketId();
+            String nextTicketId = ticketBO.getNextId();
             lblId.setText(nextTicketId);
 
     }
@@ -190,7 +195,7 @@ public class TicketPageController implements Initializable {
 
 
             TicketDto ticketDto = new TicketDto(ticketId,price,custId,eventId);
-            boolean isUpdated = ticketModel.updateTicket(ticketDto);
+            boolean isUpdated = ticketBO.update(ticketDto);
 
             if (isUpdated) {
                 refreshPage();

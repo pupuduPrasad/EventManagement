@@ -2,13 +2,13 @@ package lk.ijse.gdse.eventManage.dao;
 
 import lk.ijse.gdse.eventManage.dto.SponserAndEventDto;
 import lk.ijse.gdse.eventManage.dto.SponsorDto;
+import lk.ijse.gdse.eventManage.dao.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class
-SponsorModel {
+public class SponsorModel {
     public String getNextSponsortId() throws SQLException {
         ResultSet rst = CrudUtil.execute("select sId from sponsors order by sId desc limit 1");
 

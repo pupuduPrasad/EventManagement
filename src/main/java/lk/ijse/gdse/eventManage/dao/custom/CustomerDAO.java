@@ -7,6 +7,5 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface CustomerDAO extends CrudDAO<CustomerDto>{
-    public ArrayList<CustomerDto> getAllFeedback() throws SQLException;
 
 }

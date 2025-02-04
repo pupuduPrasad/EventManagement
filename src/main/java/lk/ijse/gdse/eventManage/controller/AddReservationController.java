@@ -10,6 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import lk.ijse.gdse.eventManage.bo.BOFactory;
+import lk.ijse.gdse.eventManage.bo.custom.ReservationBO;
+import lk.ijse.gdse.eventManage.bo.custom.impl.ReservationBOImpl;
 import lk.ijse.gdse.eventManage.dto.ReservationDto;
 import lk.ijse.gdse.eventManage.dto.tm.ReservationTm;
 import lk.ijse.gdse.eventManage.dao.custom.impl.ReservationDAOImpl;
@@ -44,6 +47,7 @@ public class AddReservationController implements Initializable {
 
     @Setter
     PaymentPageController paymentPageController;
+    private final ReservationBO reservationBO = (ReservationBO) BOFactory.getInstance().getBO(BOFactory.BOType.RESERVATION);
 
     @FXML
     void btnFinishOnAction(ActionEvent event) {
@@ -67,7 +71,7 @@ public class AddReservationController implements Initializable {
         }
     }
 
-    ReservationDAOImpl reservationDAOImpl = new ReservationDAOImpl();
+//    ReservationDAOImpl reservationDAOImpl = new ReservationDAOImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,7 +93,7 @@ public class AddReservationController implements Initializable {
     }
 
     private void loadTableData() throws Exception {
-        ArrayList<ReservationDto> reservationDtos = reservationDAOImpl.getAll();
+        ArrayList<ReservationDto> reservationDtos = reservationBO.getAll();
 
         ObservableList<ReservationTm> reservationTms = FXCollections.observableArrayList();
 

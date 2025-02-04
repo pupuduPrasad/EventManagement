@@ -60,7 +60,7 @@ public class CustomerController {
     @FXML
     private TextField txtNumber;
 
-//    private final CustomerDAOImpl customerDAOImpl = new CustomerDAOImpl();
+    //    private final CustomerDAOImpl customerDAOImpl = new CustomerDAOImpl();
     private final CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
     @FXML
     void acCustomer(MouseEvent event) {
@@ -110,7 +110,6 @@ public class CustomerController {
 
         try {
             int number = Integer.parseInt(coNumber);
-
             CustomerDto updatedCustomer = new CustomerDto(selectedCustomer.getCustId(), name, number);
 
             boolean isUpdated = customerBO.update(updatedCustomer);
@@ -140,15 +139,14 @@ public class CustomerController {
 
         try {
             int number = Integer.parseInt(String.valueOf(coNumber));
-
             CustomerDto updatedCustomer = new CustomerDto(customerDto.getCustId(), name, number);
 
-            boolean isUpdated = customerBO.update(updatedCustomer);
-            if (isUpdated) {
+            boolean isSaved = customerBO.save(updatedCustomer);
+            if (isSaved) {
                 refreshTable();
-                showAlert(Alert.AlertType.INFORMATION, "Customer updated successfully.");
+                showAlert(Alert.AlertType.INFORMATION, "Customer Save successfully.");
             } else {
-                showAlert(Alert.AlertType.ERROR, "Failed to update customer.");
+                showAlert(Alert.AlertType.ERROR, "Failed to Save customer.");
             }
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Invalid number format. Please enter a valid integer.");
@@ -205,8 +203,8 @@ public class CustomerController {
         }
     }
     private void getNextCustomerId() throws Exception {
-        String nextCustomerId = customerBO.getNextId();
-        lblCustomer.setText(nextCustomerId);
+        String nextEventId = customerBO.getNextId();
+        lblCustomer.setText(nextEventId);
     }
 
     public void navigateTo(String fxmlPath) {

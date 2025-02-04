@@ -15,9 +15,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.gdse.eventManage.bo.BOFactory;
+import lk.ijse.gdse.eventManage.bo.custom.PaymentBO;
+import lk.ijse.gdse.eventManage.bo.custom.impl.PaymentBOImpl;
 import lk.ijse.gdse.eventManage.dto.PaymentDto;
 import lk.ijse.gdse.eventManage.dto.tm.PaymentTm;
-import lk.ijse.gdse.eventManage.dao.PaymentModel;
+import lk.ijse.gdse.eventManage.dao.custom.impl.PaymentDAOImpl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -71,6 +74,7 @@ public class PaymentPageController implements Initializable {
 
     @FXML
     private TextField txtPaymentAmount;
+    private final PaymentBO paymentBO= (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
 
     @FXML
     void acDelete(ActionEvent event) throws Exception {
@@ -81,7 +85,7 @@ public class PaymentPageController implements Initializable {
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
 
-            boolean isDeleted = paymentModel.deletePayment(paymentId);
+            boolean isDeleted = paymentBO.delete(paymentId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Payment deleted...!").show();
@@ -119,7 +123,7 @@ public class PaymentPageController implements Initializable {
         refreshPage();
 
     }
-    PaymentModel paymentModel = new PaymentModel();
+//    PaymentDAOImpl paymentDAOImpl = new PaymentDAOImpl();
     @FXML
     void acSave(ActionEvent event) {
         try {
@@ -135,7 +139,7 @@ public class PaymentPageController implements Initializable {
 
             PaymentDto paymentDto = new PaymentDto(paymentId, paymentDate, paymentAmount, reservationId);
 
-            boolean isSaved = paymentModel.savePayment(paymentDto);
+            boolean isSaved = paymentBO.save(paymentDto);
 
             if (isSaved) {
                 refreshPage();
@@ -169,7 +173,7 @@ public class PaymentPageController implements Initializable {
 
                 double paymentAmount = Double.parseDouble(paymentAmountString);
                 PaymentDto paymentDto = new PaymentDto(paymentId, paymentDate, paymentAmount, reservationId);
-                boolean isUpdated = paymentModel.updatePayment(paymentDto);
+                boolean isUpdated = paymentBO.update(paymentDto);
 
                 if (isUpdated) {
                     refreshPage();
@@ -197,7 +201,7 @@ public class PaymentPageController implements Initializable {
     }
 
     private void loadTableData() throws Exception {
-        ArrayList<PaymentDto> paymentDTOS = paymentModel.getAllPayment();
+        ArrayList<PaymentDto> paymentDTOS = paymentBO.getAll();
 
         ObservableList<PaymentTm> paymentTms = FXCollections.observableArrayList();
 
@@ -210,7 +214,7 @@ public class PaymentPageController implements Initializable {
     }
 
     private void getNextPaymentId() throws Exception {
-        String paymentId = paymentModel.getNextPaymentId();
+        String paymentId = paymentBO.getNextId();
         lblPayId.setText(paymentId);
     }
 
@@ -235,9 +239,6 @@ public class PaymentPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        Image paymentImage = new Image(getClass().getResourceAsStream("/image/simple2.jpeg"));
-//        imageView.setImage(paymentImage);
-
         colPaymentId.setCellValueFactory(new PropertyValueFactory<>("pId"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));

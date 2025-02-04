@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import lk.ijse.gdse.eventManage.bo.BOFactory;
+import lk.ijse.gdse.eventManage.bo.custom.EventBo;
 import lk.ijse.gdse.eventManage.dto.EventDto;
 import lk.ijse.gdse.eventManage.dto.tm.EventTm;
 import lk.ijse.gdse.eventManage.dao.custom.impl.EventDAOImpl;
@@ -53,6 +55,8 @@ public class AddEventController implements Initializable {
 
     @Setter
     SponsorsController sponsorsController;
+
+    private final EventBo eventBo= (EventBo) BOFactory.getInstance().getBO(BOFactory.BOType.EVENT);
 
     @FXML
     void btnFinishOnAction(ActionEvent event) {
@@ -107,7 +111,7 @@ public class AddEventController implements Initializable {
         }
     }
 
-    EventDAOImpl eventDAOImpl = new EventDAOImpl();
+//    EventDAOImpl eventDAOImpl = new EventDAOImpl();
 
     private void refreshPage() throws Exception {
         loadTableData();
@@ -116,7 +120,7 @@ public class AddEventController implements Initializable {
     }
 
     private void loadTableData() throws Exception {
-        ArrayList<EventDto> customerDTOS = eventDAOImpl.getAll();
+        ArrayList<EventDto> customerDTOS = eventBo.getAll();
 
         ObservableList<EventTm> eventTms = FXCollections.observableArrayList();
 

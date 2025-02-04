@@ -47,10 +47,9 @@
       <TextField fx:id="txtPrice" layoutX="275.0" layoutY="230.0" prefHeight="27.0" prefWidth="350.0" style="-fx-border-color: black;" />
       <TextField fx:id="lblCustomerId" layoutX="275.0" layoutY="266.0" prefHeight="27.0" prefWidth="350.0" style="-fx-border-color: black;" />
       <TextField fx:id="lblEventId" layoutX="275.0" layoutY="304.0" prefHeight="27.0" prefWidth="350.0" style="-fx-border-color: black;" />
-      <TableView fx:id="tblTicket" layoutX="63.0" layoutY="441.0" onMouseClicked="#ticketAction" prefHeight="237.0" prefWidth="786.0">
+      <TableView fx:id="tblTicket" layoutX="153.0" layoutY="436.0" onMouseClicked="#ticketAction" prefHeight="238.0" prefWidth="627.0">
         <columns>
           <TableColumn fx:id="colTicketId" prefWidth="162.4000473022461" text="Ticket Id" />
-          <TableColumn fx:id="colDate" prefWidth="163.20001220703125" text="Date" />
             <TableColumn fx:id="colPrice" prefWidth="148.80001831054688" text="Price" />
             <TableColumn fx:id="colCustomerId" prefWidth="151.99993896484375" text="Customer Id" />
             <TableColumn fx:id="colEventId" prefWidth="160.00006103515625" text="Event Id" />

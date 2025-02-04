@@ -1,9 +1,6 @@
 package lk.ijse.gdse.eventManage.bo;
 
-import lk.ijse.gdse.eventManage.bo.custom.impl.CustomerBOImpl;
-import lk.ijse.gdse.eventManage.bo.custom.impl.EventBOImpl;
-import lk.ijse.gdse.eventManage.bo.custom.impl.FeedbackBOImpl;
-import lk.ijse.gdse.eventManage.bo.custom.impl.ReservationBOImpl;
+import lk.ijse.gdse.eventManage.bo.custom.impl.*;
 
 public class BOFactory {
     private static BOFactory boFactory;
@@ -12,7 +9,7 @@ public class BOFactory {
         return boFactory==null?boFactory=new BOFactory():boFactory;
     }
     public enum BOType {
-        CUSTOMER,EVENT,RESERVATION,FEEDBACK
+        CUSTOMER,EVENT,RESERVATION,FEEDBACK,TICKET,PAYMENT,USER
     }
     public SuperBo getBO(BOType type) {
         switch (type) {
@@ -24,6 +21,12 @@ public class BOFactory {
                         return new ReservationBOImpl();
                         case FEEDBACK:
                             return new FeedbackBOImpl();
+                            case TICKET:
+                                return new TicketBOImpl();
+                                case PAYMENT:
+                                    return new PaymentBOImpl();
+                                    case USER:
+                                        return new UserBOImpl();
             default:
                 return null;
         }
