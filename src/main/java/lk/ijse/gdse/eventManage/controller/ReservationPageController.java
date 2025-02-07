@@ -18,10 +18,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.gdse.eventManage.bo.BOFactory;
 import lk.ijse.gdse.eventManage.bo.custom.ReservationBO;
-import lk.ijse.gdse.eventManage.bo.custom.impl.ReservationBOImpl;
 import lk.ijse.gdse.eventManage.dto.ReservationDto;
 import lk.ijse.gdse.eventManage.dto.tm.ReservationTm;
-import lk.ijse.gdse.eventManage.dao.custom.impl.ReservationDAOImpl;
 import lombok.Setter;
 
 
@@ -168,7 +166,6 @@ public class ReservationPageController implements Initializable {
 
 
         ReservationDto reservationDto = new ReservationDto(rId, date, eventVenue, eventId);
-
         boolean isSaved = reservationBO.save(reservationDto);
 
         if (isSaved) {

@@ -2,9 +2,9 @@ package lk.ijse.gdse.eventManage.dao.custom.impl;
 
 import lk.ijse.gdse.eventManage.dao.CrudUtil;
 import lk.ijse.gdse.eventManage.dao.custom.UserDAO;
-import lk.ijse.gdse.eventManage.dto.TicketDto;
 import lk.ijse.gdse.eventManage.dto.UserDto;
 import lk.ijse.gdse.eventManage.db.DBConnection;
+import lk.ijse.gdse.eventManage.entity.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +29,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public ArrayList<UserDto> getAll() throws SQLException {
+    public ArrayList<User> getAll() throws SQLException {
         return null;
     }
 
@@ -38,12 +38,12 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
     @Override
-    public boolean update(UserDto dto) throws SQLException {
+    public boolean update(User user) throws SQLException {
         return false;
     }
 
-    public boolean save(UserDto userDto) throws SQLException {
-        return CrudUtil.execute("insert into user values(?,?)", userDto.getUserName(), userDto.getPassword());
+    public boolean save(User user) throws SQLException {
+        return CrudUtil.execute("insert into user values(?,?)", user.getUserName(), user.getPassword());
     }
 
 

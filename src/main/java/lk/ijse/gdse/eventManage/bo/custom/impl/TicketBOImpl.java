@@ -4,6 +4,7 @@ import lk.ijse.gdse.eventManage.bo.custom.TicketBO;
 import lk.ijse.gdse.eventManage.dao.DAOFactory;
 import lk.ijse.gdse.eventManage.dao.custom.TicketDAO;
 import lk.ijse.gdse.eventManage.dto.TicketDto;
+import lk.ijse.gdse.eventManage.entity.Ticket;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,13 +17,13 @@ public class TicketBOImpl implements TicketBO {
     }
 
     @Override
-    public boolean save(TicketDto ticketDto) throws SQLException {
-        return ticketDAO.save(ticketDto);
+    public boolean save(TicketDto entity) throws SQLException {
+        return ticketDAO.save(new Ticket(entity.getTicketId(),entity.getPrice(),entity.getCustId(),entity.getEventId()));
     }
 
     @Override
-    public boolean update(TicketDto ticketDto) throws SQLException {
-        return ticketDAO.update(ticketDto);
+    public boolean update(TicketDto entity) throws SQLException {
+        return ticketDAO.update(new Ticket(entity.getTicketId(),entity.getPrice(),entity.getCustId(),entity.getEventId()));
     }
 
     @Override
@@ -32,6 +33,16 @@ public class TicketBOImpl implements TicketBO {
 
     @Override
     public ArrayList<TicketDto> getAll() throws SQLException {
-        return ticketDAO.getAll();
+        ArrayList<Ticket> tickets = ticketDAO.getAll();
+        ArrayList<TicketDto> ticketDtos = new ArrayList<>();
+        for (Ticket ticket : tickets) {
+            TicketDto ticketDto = new TicketDto();
+            ticketDto.setTicketId(ticket.getTicketId());
+            ticketDto.setPrice(ticket.getPrice());
+            ticketDto.setCustId(ticket.getCustId());
+            ticketDto.setEventId(ticket.getEventId());
+            ticketDtos.add(ticketDto);
+        }
+        return ticketDtos;
     }
 }

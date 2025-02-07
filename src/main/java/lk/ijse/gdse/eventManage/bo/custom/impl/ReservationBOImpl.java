@@ -1,11 +1,10 @@
 package lk.ijse.gdse.eventManage.bo.custom.impl;
 
-import lk.ijse.gdse.eventManage.bo.BOFactory;
 import lk.ijse.gdse.eventManage.bo.custom.ReservationBO;
 import lk.ijse.gdse.eventManage.dao.DAOFactory;
 import lk.ijse.gdse.eventManage.dao.custom.ReservationDAO;
-import lk.ijse.gdse.eventManage.dao.custom.impl.ReservationDAOImpl;
 import lk.ijse.gdse.eventManage.dto.ReservationDto;
+import lk.ijse.gdse.eventManage.entity.Reservation;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,13 +18,13 @@ public class ReservationBOImpl implements ReservationBO {
     }
 
     @Override
-    public boolean save(ReservationDto reservationDto) throws SQLException {
-        return reservationDAO.save(reservationDto);
+    public boolean save(ReservationDto entity) throws SQLException {
+        return reservationDAO.save(new Reservation(entity.getRId(),entity.getDate(),entity.getEventVenue(),entity.getEventId()));
     }
 
     @Override
-    public boolean update(ReservationDto reservationDto) throws SQLException {
-        return reservationDAO.update(reservationDto);
+    public boolean update(ReservationDto entity) throws SQLException {
+        return reservationDAO.update(new Reservation(entity.getRId(),entity.getDate(),entity.getEventVenue(),entity.getEventId()));
     }
 
     @Override
@@ -35,6 +34,17 @@ public class ReservationBOImpl implements ReservationBO {
 
     @Override
     public ArrayList<ReservationDto> getAll() throws SQLException {
-        return  reservationDAO.getAll();
+        ArrayList<Reservation> reservationArrayList=reservationDAO.getAll();
+        ArrayList<ReservationDto> reservationDtoArrayList=new ArrayList<>();
+        for(Reservation reservation:reservationArrayList){
+            ReservationDto reservationDto=new ReservationDto();
+            reservationDto.setRId(reservation.getRId());
+            reservationDto.setDate(reservation.getDate());
+            reservationDto.setEventVenue(reservation.getEventVenue());
+            reservationDto.setEventId(reservation.getEventId());
+            reservationDtoArrayList.add(reservationDto);
+
+        }
+        return reservationDtoArrayList;
     }
 }

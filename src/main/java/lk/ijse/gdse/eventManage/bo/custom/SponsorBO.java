@@ -1,7 +1,6 @@
 package lk.ijse.gdse.eventManage.bo.custom;
 
 import lk.ijse.gdse.eventManage.bo.SuperBo;
-import lk.ijse.gdse.eventManage.dto.ReservationDto;
 import lk.ijse.gdse.eventManage.dto.SponsorDto;
 
 import java.sql.SQLException;

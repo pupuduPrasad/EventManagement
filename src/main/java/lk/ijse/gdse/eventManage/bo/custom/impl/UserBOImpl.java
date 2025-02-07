@@ -3,8 +3,8 @@ package lk.ijse.gdse.eventManage.bo.custom.impl;
 import lk.ijse.gdse.eventManage.bo.custom.UserBO;
 import lk.ijse.gdse.eventManage.dao.DAOFactory;
 import lk.ijse.gdse.eventManage.dao.custom.UserDAO;
-import lk.ijse.gdse.eventManage.dto.TicketDto;
 import lk.ijse.gdse.eventManage.dto.UserDto;
+import lk.ijse.gdse.eventManage.entity.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,13 +13,13 @@ public class UserBOImpl implements UserBO {
     private final UserDAO userDAO= (UserDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.USER);
 
     @Override
-    public boolean save(UserDto userDto) throws SQLException {
-        return userDAO.save(userDto);
+    public boolean save(UserDto entity) throws SQLException {
+        return userDAO.save(new User(entity.getUserName(),entity.getPassword()));
     }
 
     @Override
-    public boolean update(UserDto userDto) throws SQLException {
-        return userDAO.update(userDto);
+    public boolean update(UserDto entity) throws SQLException {
+        return userDAO.update(new User(entity.getUserName(),entity.getPassword()));
     }
 
     @Override
