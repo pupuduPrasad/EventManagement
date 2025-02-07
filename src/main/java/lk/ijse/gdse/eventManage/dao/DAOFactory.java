@@ -11,7 +11,7 @@ public class DAOFactory {
         return daoFactory==null?daoFactory=new DAOFactory():daoFactory;
     }
     public enum DAOType {
-        CUSTOMER,EVENT,RESERVATION,FEEDBACK,TICKET,PAYMENT,USER
+        CUSTOMER,EVENT,RESERVATION,FEEDBACK,TICKET,PAYMENT,USER,SPONSOR,SPONSOREVENT
         }
     public SuperDAO getDAO(DAOType type) {
         switch (type){
@@ -29,6 +29,10 @@ public class DAOFactory {
                                     return new PaymentDAOImpl();
                                     case USER:
                                         return new UserDAOImpl();
+                                        case SPONSOR:
+                                            return new SponsorDAOImpl();
+                                            case SPONSOREVENT:
+                                                return new SponsorEventDAOImpl();
                 default:
                     return null;
 

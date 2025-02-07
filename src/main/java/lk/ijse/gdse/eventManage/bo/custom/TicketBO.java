@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface TicketBO extends SuperBo {
-    public String getNextId() throws SQLException;
-    public boolean save(TicketDto ticketDto) throws SQLException;
-    public boolean update(TicketDto ticketDto) throws SQLException;
-    public boolean delete(String ticketId) throws SQLException ;
-    public ArrayList<TicketDto> getAll() throws SQLException ;
+     String getNextId() throws SQLException;
+     boolean save(TicketDto ticketDto) throws SQLException;
+     boolean update(TicketDto ticketDto) throws SQLException;
+     boolean delete(String ticketId) throws SQLException ;
+     ArrayList<TicketDto> getAll() throws SQLException ;
 }

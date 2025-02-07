@@ -5,6 +5,8 @@ import lk.ijse.gdse.eventManage.dao.DAOFactory;
 import lk.ijse.gdse.eventManage.dao.custom.CustomerDAO;
 import lk.ijse.gdse.eventManage.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse.eventManage.dto.CustomerDto;
+import lk.ijse.gdse.eventManage.entity.Customer;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 public class CustomerBOImpl implements CustomerBO {
@@ -14,12 +16,14 @@ public class CustomerBOImpl implements CustomerBO {
         return customerDAO.getNextId();
     }
     @Override
-    public boolean save(CustomerDto customerDto) throws SQLException {
-        return customerDAO.save(customerDto);
+    public boolean save(CustomerDto entity) throws SQLException {
+        return customerDAO.save(new Customer(entity.getCustId() , entity.getName() , entity.getCoNumber())
+        );
     }
     @Override
-    public boolean update(CustomerDto customerDto) throws SQLException {
-        return customerDAO.update(customerDto);
+    public boolean update(CustomerDto entity) throws SQLException {
+        return customerDAO.update(new Customer(entity.getCustId() , entity.getName() , entity.getCoNumber())
+        );
     }
     @Override
     public boolean delete(String custId) throws SQLException {
@@ -27,7 +31,16 @@ public class CustomerBOImpl implements CustomerBO {
     }
     @Override
     public ArrayList<CustomerDto> getAll() throws SQLException {
-        return customerDAO.getAll();
+        ArrayList<Customer> customerList = customerDAO.getAll();
+        ArrayList<CustomerDto> customerDtoList = new ArrayList<>();
+        for (Customer customer : customerList) {
+            CustomerDto customerDto = new CustomerDto();
+            customerDto.setCustId(customer.getCustId());
+            customerDto.setName(customer.getName());
+            customerDto.setCoNumber(customer.getCoNumber());
+            customerDtoList.add(customerDto);
+        }
+        return customerDtoList;
     }
 
 }

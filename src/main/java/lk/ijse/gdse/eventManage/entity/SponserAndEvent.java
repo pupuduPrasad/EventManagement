@@ -1,12 +1,15 @@
-package lk.ijse.gdse.eventManage.dto;
+package lk.ijse.gdse.eventManage.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @ToString
-public class SponserAndEventDto {
+public class SponserAndEvent {
     private String sId;
     private String eventId;
     private String name;
@@ -15,7 +18,7 @@ public class SponserAndEventDto {
     private double amount;
 
 
-    public SponserAndEventDto(String sponsorId,String eventID , String sponsorName, String phoneNumber, String address , double amount) {
+    public SponserAndEvent(String sponsorId, String eventID , String sponsorName, String phoneNumber, String address , double amount) {
         this.sId = sponsorId;
         this.name = sponsorName;
         this.contactNumber = phoneNumber;
@@ -24,7 +27,7 @@ public class SponserAndEventDto {
         this.amount = amount;
     }
 
-    public SponserAndEventDto(String eventId, String sId, double amount) {
+    public SponserAndEvent(String eventId, String sId, double amount) {
         this.sId = sId;
         this.eventId = eventId;
         this.amount = amount;

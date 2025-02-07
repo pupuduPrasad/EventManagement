@@ -9,7 +9,7 @@ public class BOFactory {
         return boFactory==null?boFactory=new BOFactory():boFactory;
     }
     public enum BOType {
-        CUSTOMER,EVENT,RESERVATION,FEEDBACK,TICKET,PAYMENT,USER
+        CUSTOMER,EVENT,RESERVATION,FEEDBACK,TICKET,PAYMENT,USER,SPONSOR,SPONSOREVENT
     }
     public SuperBo getBO(BOType type) {
         switch (type) {
@@ -27,6 +27,10 @@ public class BOFactory {
                                     return new PaymentBOImpl();
                                     case USER:
                                         return new UserBOImpl();
+                                        case SPONSOR:
+                                            return new SponsorBOImpl();
+                                            case SPONSOREVENT:
+                                                return new SponsorEventBOImpl();
             default:
                 return null;
         }

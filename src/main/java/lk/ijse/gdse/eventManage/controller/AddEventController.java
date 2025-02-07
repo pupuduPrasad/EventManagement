@@ -14,7 +14,6 @@ import lk.ijse.gdse.eventManage.bo.BOFactory;
 import lk.ijse.gdse.eventManage.bo.custom.EventBo;
 import lk.ijse.gdse.eventManage.dto.EventDto;
 import lk.ijse.gdse.eventManage.dto.tm.EventTm;
-import lk.ijse.gdse.eventManage.dao.custom.impl.EventDAOImpl;
 import lombok.Setter;
 
 import java.net.URL;
@@ -124,8 +123,8 @@ public class AddEventController implements Initializable {
 
         ObservableList<EventTm> eventTms = FXCollections.observableArrayList();
 
-        for (EventDto eventDto : customerDTOS) {
-            EventTm eventTm = new EventTm(eventDto.getEventId(), eventDto.getEventName(), eventDto.getEventFaculty(), eventDto.getDescription(), eventDto.getDate(), eventDto.getTime());
+        for (EventDto customer : customerDTOS) {
+            EventTm eventTm = new EventTm(customer.getEventId(), customer.getEventName(), customer.getEventFaculty(), customer.getDescription(), customer.getDate(), customer.getTime());
             eventTms.add(eventTm);
         }
 

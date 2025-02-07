@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface PaymentBO extends SuperBo {
-    public String getNextId() throws SQLException;
-    public boolean save(PaymentDto paymentDto) throws SQLException;
-    public boolean update(PaymentDto paymentDto) throws SQLException;
-    public boolean delete(String pId) throws SQLException ;
-    public ArrayList<PaymentDto> getAll() throws SQLException ;
+     String getNextId() throws SQLException;
+     boolean save(PaymentDto paymentDto) throws SQLException;
+     boolean update(PaymentDto paymentDto) throws SQLException;
+     boolean delete(String pId) throws SQLException ;
+     ArrayList<PaymentDto> getAll() throws SQLException ;
 }

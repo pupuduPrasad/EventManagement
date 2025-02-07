@@ -14,12 +14,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.gdse.eventManage.bo.BOFactory;
+import lk.ijse.gdse.eventManage.bo.custom.SponsorBO;
+import lk.ijse.gdse.eventManage.bo.custom.SponsorEventBO;
 import lk.ijse.gdse.eventManage.dto.EventSponsorsDto;
 import lk.ijse.gdse.eventManage.dto.SponserAndEventDto;
 import lk.ijse.gdse.eventManage.dto.SponsorDto;
 import lk.ijse.gdse.eventManage.dto.tm.SponsorTm;
-import lk.ijse.gdse.eventManage.dao.SponsorEventModel;
-import lk.ijse.gdse.eventManage.dao.SponsorModel;
+import lk.ijse.gdse.eventManage.dao.custom.impl.SponsorEventDAOImpl;
+import lk.ijse.gdse.eventManage.dao.custom.impl.SponsorDAOImpl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -82,6 +85,8 @@ public class SponsorsController implements Initializable {
     @FXML
     private AnchorPane content;
 
+        private final SponsorBO sponsorBO = (SponsorBO) BOFactory.getInstance().getBO(BOFactory.BOType.SPONSOR);
+        private final SponsorEventBO sponsorEventBO = (SponsorEventBO) BOFactory.getInstance().getBO(BOFactory.BOType.SPONSOREVENT);
     @FXML
     void acAddEvent(ActionEvent event) {
         try {
@@ -110,7 +115,7 @@ public class SponsorsController implements Initializable {
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
 
-            boolean isDeleted = sponsorModel.deleteSponsor(sponcerId);
+            boolean isDeleted = sponsorBO.delete(sponcerId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Payment deleted...!").show();
@@ -130,8 +135,8 @@ public class SponsorsController implements Initializable {
         refreshPage();
     }
 
-    SponsorModel sponsorModel = new SponsorModel();
-    SponsorEventModel sponsorEventModel = new SponsorEventModel();
+//    SponsorDAOImpl sponsorDAOImpl = new SponsorDAOImpl();
+//    SponsorEventDAOImpl sponsorEventDAOImpl = new SponsorEventDAOImpl();
 
 
     @FXML
@@ -146,8 +151,8 @@ public class SponsorsController implements Initializable {
         SponsorDto sponsorDto = new SponsorDto(sponsorId, sponsorName, phoneNumber, address);
         EventSponsorsDto eventSponsorsDto = new EventSponsorsDto(eventId, sponsorId, amount);
 
-        boolean isSavedS = sponsorModel.saveSponsor(sponsorDto);
-        boolean isSavedSE = sponsorEventModel.saveSponsor(eventSponsorsDto);
+        boolean isSavedS = sponsorBO.save(sponsorDto);
+        boolean isSavedSE = sponsorEventBO.save(eventSponsorsDto);
 
         if (isSavedS && isSavedSE) {
             refreshPage();
@@ -169,8 +174,8 @@ public class SponsorsController implements Initializable {
         SponsorDto sponsorDto = new SponsorDto(sponsorId, sponsorName, phoneNumber, address);
         EventSponsorsDto eventSponsorsDto = new EventSponsorsDto(eventId, sponsorId, amount);
 
-        boolean isUpdatedS = sponsorModel.updateSponsor(sponsorDto);
-        boolean isUpdatedSE = sponsorEventModel.updateSponsor(eventSponsorsDto);
+        boolean isUpdatedS = sponsorBO.update(sponsorDto);
+        boolean isUpdatedSE = sponsorEventBO.update(eventSponsorsDto);
 
         if (isUpdatedS && isUpdatedSE) {
             refreshPage();
@@ -222,17 +227,29 @@ public class SponsorsController implements Initializable {
     }
 
     private void loadNextSponsorId() throws Exception {
-        String nextSponsorId = sponsorModel.getNextSponsortId();
+        String nextSponsorId = sponsorBO.getNextId();
         lblSponsorId.setText(nextSponsorId);
     }
 
     private void loadTableData() throws Exception {
-        ArrayList<SponserAndEventDto> sponsorModelAllSponsors = sponsorModel.getAllSponsors();
-
+        ArrayList<SponsorDto> list = sponsorBO.getAll();
         ObservableList<SponsorTm> sponsorTms = FXCollections.observableArrayList();
 
-        for (SponserAndEventDto sponserAndEventDto : sponsorModelAllSponsors) {
-            SponsorTm sponsorTm = new SponsorTm(sponserAndEventDto.getSId(), sponserAndEventDto.getEventId(), sponserAndEventDto.getName(), sponserAndEventDto.getContactNumber(), sponserAndEventDto.getAddress(), sponserAndEventDto.getAmount());
+//        ArrayList<SponserAndEventDto> list = new ArrayList<>();
+//        for (SponsorDto sponsorDto : lis) {
+//            SponserAndEventDto dto = new SponserAndEventDto();
+//            dto.setSId(sponsorDto.getSId());
+//            dto.setEventId(sponsorDto.getEventID());
+//            dto.setName(sponsorDto.getName());
+//            dto.setContactNumber(sponsorDto.getContactNumber());
+//            dto.setAddress(sponsorDto.getAddress());
+//            dto.setAmount(sponsorDto.getAmount());
+//            list.add(dto);
+//        }
+
+        for (SponsorDto dto : list) {
+            System.out.println(dto.getEventID());
+            SponsorTm sponsorTm = new SponsorTm(dto.getSId(), dto.getEventID(), dto.getName(), dto.getContactNumber(), dto.getAddress(), dto.getAmount());
             sponsorTms.add(sponsorTm);
         }
 

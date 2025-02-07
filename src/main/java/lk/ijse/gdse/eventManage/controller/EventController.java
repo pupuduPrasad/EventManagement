@@ -16,7 +16,7 @@ import lk.ijse.gdse.eventManage.bo.BOFactory;
 import lk.ijse.gdse.eventManage.bo.custom.EventBo;
 import lk.ijse.gdse.eventManage.dto.EventDto;
 import lk.ijse.gdse.eventManage.dto.tm.EventTm;
-import lk.ijse.gdse.eventManage.dao.custom.impl.EventDAOImpl;
+
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
@@ -128,9 +128,9 @@ public class EventController implements Initializable {
         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         String time = txtTime.getText();
 
-        EventDto eventDto = new EventDto(eventId, eventName, eventFaculty, description, date, time);
+        EventDto customer = new EventDto(eventId, eventName, eventFaculty, description, date, time);
 
-        boolean isSaved = eventBo.save(eventDto);
+        boolean isSaved = eventBo.save(customer);
 
         if (isSaved) {
             refreshPage();
@@ -165,8 +165,8 @@ public class EventController implements Initializable {
 
         try {
             Date dateD = formatter.parse(date);
-            EventDto eventDto = new EventDto(eventId, eventName, eventFaculty, description, dateD, time);
-            boolean isUpdated = eventBo.update(eventDto);
+            EventDto customer = new EventDto(eventId, eventName, eventFaculty, description, dateD, time);
+            boolean isUpdated = eventBo.update(customer);
 
             if (isUpdated) {
                 refreshPage();
@@ -219,12 +219,12 @@ public class EventController implements Initializable {
 //    EventDAOImpl eventDAOImpl = new EventDAOImpl();
 
     private void loadTableData() throws Exception {
-        ArrayList<EventDto> eventDtos = eventBo.getAll();
+        ArrayList<EventDto> customers = eventBo.getAll();
 
         ObservableList<EventTm> eventTms = FXCollections.observableArrayList();
 
-        for (EventDto eventDto : eventDtos) {
-            EventTm eventTm = new EventTm(eventDto.getEventId(), eventDto.getEventName(), eventDto.getEventFaculty(), eventDto.getDescription(), eventDto.getDate(), eventDto.getTime());
+        for (EventDto customer : customers) {
+            EventTm eventTm = new EventTm(customer.getEventId(), customer.getEventName(), customer.getEventFaculty(), customer.getDescription(), customer.getDate(), customer.getTime());
             eventTms.add(eventTm);
         }
 

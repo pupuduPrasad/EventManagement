@@ -7,6 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface UserDAO extends CrudDAO<UserDto> {
-    public boolean isUserNameExists(String username) throws SQLException;
-    public ArrayList<String> getAllUserNames() throws SQLException;
+     boolean isUserNameExists(String username) throws SQLException;
+     ArrayList<String> getAllUserNames() throws SQLException;
 }

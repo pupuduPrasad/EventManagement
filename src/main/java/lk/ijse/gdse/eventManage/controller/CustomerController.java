@@ -12,10 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse.eventManage.bo.BOFactory;
 import lk.ijse.gdse.eventManage.bo.custom.CustomerBO;
-import lk.ijse.gdse.eventManage.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.gdse.eventManage.dto.CustomerDto;
 import lk.ijse.gdse.eventManage.dto.tm.CustomerTm;
-import lk.ijse.gdse.eventManage.dao.custom.impl.CustomerDAOImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;

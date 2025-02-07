@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class TicketBOImpl implements TicketBO {
     private final TicketDAO ticketDAO= (TicketDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.TICKET);
-
     @Override
     public String getNextId() throws SQLException {
         return ticketDAO.getNextId();
