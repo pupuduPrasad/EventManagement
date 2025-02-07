@@ -3,6 +3,7 @@ package lk.ijse.gdse.eventManage.dao.custom.impl;
 import lk.ijse.gdse.eventManage.dao.CrudUtil;
 import lk.ijse.gdse.eventManage.dao.custom.PaymentDAO;
 import lk.ijse.gdse.eventManage.dto.PaymentDto;
+import lk.ijse.gdse.eventManage.entity.Payment;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,26 +23,26 @@ public class PaymentDAOImpl implements PaymentDAO {
         return "P001";
     }
 
-    public boolean save(PaymentDto paymentDto) throws SQLException {
-        return CrudUtil.execute("insert into payment values(?,?,?,?)", paymentDto.getPId(), paymentDto.getDate(), paymentDto.getAmount(), paymentDto.getReservationId());
+    public boolean save(Payment payment) throws SQLException {
+        return CrudUtil.execute("insert into payment values(?,?,?,?)", payment.getPId(), payment.getDate(), payment.getAmount(), payment.getReservationId());
     }
 
-    public boolean update(PaymentDto paymentDto) throws SQLException {
-        return CrudUtil.execute("update payment set date=?, amount=?, reservationId=? where pId=?", paymentDto.getDate(), paymentDto.getAmount(), paymentDto.getReservationId(), paymentDto.getPId());
+    public boolean update(Payment payment) throws SQLException {
+        return CrudUtil.execute("update payment set date=?, amount=?, reservationId=? where pId=?", payment.getDate(), payment.getAmount(), payment.getReservationId(), payment.getPId());
     }
 
     public boolean delete(String paymentId) throws SQLException {
         return CrudUtil.execute("delete from payment where pId=?", paymentId);
     }
 
-    public ArrayList<PaymentDto> getAll() throws SQLException {
+    public ArrayList<Payment> getAll() throws SQLException {
         ResultSet rst = CrudUtil.execute("select * from payment");
 
-        ArrayList<PaymentDto> paymentDtos = new ArrayList<>();
+        ArrayList<Payment> paymentDtos = new ArrayList<>();
 
         while (rst.next()) {
-            PaymentDto paymentDto = new PaymentDto(rst.getString(1), rst.getDate(2), rst.getDouble(3), rst.getString(4));
-            paymentDtos.add(paymentDto);
+            Payment payment = new Payment(rst.getString(1), rst.getDate(2), rst.getDouble(3), rst.getString(4));
+            paymentDtos.add(payment);
         }
         return paymentDtos;
     }

@@ -3,7 +3,6 @@ import lk.ijse.gdse.eventManage.bo.custom.CustomerBO;
 import lk.ijse.gdse.eventManage.dao.CrudDAO;
 import lk.ijse.gdse.eventManage.dao.DAOFactory;
 import lk.ijse.gdse.eventManage.dao.custom.CustomerDAO;
-import lk.ijse.gdse.eventManage.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse.eventManage.dto.CustomerDto;
 import lk.ijse.gdse.eventManage.entity.Customer;
 

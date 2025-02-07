@@ -2,7 +2,7 @@ package lk.ijse.gdse.eventManage.dao.custom.impl;
 
 import lk.ijse.gdse.eventManage.dao.CrudUtil;
 import lk.ijse.gdse.eventManage.dao.custom.FeedbackDAO;
-import lk.ijse.gdse.eventManage.dto.FeedbackDto;
+import lk.ijse.gdse.eventManage.entity.Feedback;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,39 +23,39 @@ public class FeedbackDAOImpl implements FeedbackDAO {
         return "F001";
     }
 
-    public boolean save(FeedbackDto feedbackDto) throws SQLException {
+    public boolean save(Feedback feedback) throws SQLException {
         return CrudUtil.execute(
                 "INSERT INTO feedback VALUES (?, ?, ?)",
-                feedbackDto.getFId(),
-                feedbackDto.getCustId(),
-                feedbackDto.getComment()
+                feedback.getFId(),
+                feedback.getCustId(),
+                feedback.getComment()
         );
     }
 
-    public boolean update(FeedbackDto feedbackDto) throws SQLException {
+    public boolean update(Feedback feedback) throws SQLException {
         return CrudUtil.execute(
                 "UPDATE feedback SET custId=?, comment=? WHERE fId=?",
-                feedbackDto.getCustId(),
-                feedbackDto.getComment(),
-                feedbackDto.getFId()
+                feedback.getCustId(),
+                feedback.getComment(),
+                feedback.getFId()
         );
     }
 
     public boolean delete(String feedbackId) throws SQLException {
         return CrudUtil.execute("DELETE FROM feedback WHERE fId=?", feedbackId);
     }
-
-    public ArrayList<FeedbackDto> getAll() throws SQLException {
+    @Override
+    public ArrayList<Feedback> getAll() throws SQLException {
         ResultSet rst = CrudUtil.execute("SELECT * FROM feedback");
 
-        ArrayList<FeedbackDto> feedbackList = new ArrayList<>();
+        ArrayList<Feedback> feedbackList = new ArrayList<>();
         while (rst.next()) {
-            FeedbackDto feedbackDto = new FeedbackDto(
+            Feedback feedback = new Feedback(
                     rst.getString(1),
                     rst.getString(2),
                     rst.getString(3)
             );
-            feedbackList.add(feedbackDto);
+            feedbackList.add(feedback);
         }
         return feedbackList;
     }

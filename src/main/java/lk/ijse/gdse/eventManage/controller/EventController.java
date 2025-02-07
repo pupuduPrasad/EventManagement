@@ -128,9 +128,9 @@ public class EventController implements Initializable {
         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         String time = txtTime.getText();
 
-        EventDto customer = new EventDto(eventId, eventName, eventFaculty, description, date, time);
+        EventDto eventDto = new EventDto(eventId, eventName, eventFaculty, description, date, time);
 
-        boolean isSaved = eventBo.save(customer);
+        boolean isSaved = eventBo.save(eventDto);
 
         if (isSaved) {
             refreshPage();
@@ -165,8 +165,8 @@ public class EventController implements Initializable {
 
         try {
             Date dateD = formatter.parse(date);
-            EventDto customer = new EventDto(eventId, eventName, eventFaculty, description, dateD, time);
-            boolean isUpdated = eventBo.update(customer);
+            EventDto eventDto = new EventDto(eventId, eventName, eventFaculty, description, dateD, time);
+            boolean isUpdated = eventBo.update(eventDto);
 
             if (isUpdated) {
                 refreshPage();
@@ -219,11 +219,11 @@ public class EventController implements Initializable {
 //    EventDAOImpl eventDAOImpl = new EventDAOImpl();
 
     private void loadTableData() throws Exception {
-        ArrayList<EventDto> customers = eventBo.getAll();
+        ArrayList<EventDto> eventDtos = eventBo.getAll();
 
         ObservableList<EventTm> eventTms = FXCollections.observableArrayList();
 
-        for (EventDto customer : customers) {
+        for (EventDto customer : eventDtos) {
             EventTm eventTm = new EventTm(customer.getEventId(), customer.getEventName(), customer.getEventFaculty(), customer.getDescription(), customer.getDate(), customer.getTime());
             eventTms.add(eventTm);
         }

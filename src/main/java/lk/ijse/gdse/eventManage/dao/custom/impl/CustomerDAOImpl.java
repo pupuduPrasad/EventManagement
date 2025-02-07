@@ -1,13 +1,10 @@
 package lk.ijse.gdse.eventManage.dao.custom.impl;
 
 import lk.ijse.gdse.eventManage.dao.custom.CustomerDAO;
-import lk.ijse.gdse.eventManage.db.DBConnection;
-import lk.ijse.gdse.eventManage.dto.CustomerDto;
 import lk.ijse.gdse.eventManage.dao.CrudUtil;
 import lk.ijse.gdse.eventManage.entity.Customer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

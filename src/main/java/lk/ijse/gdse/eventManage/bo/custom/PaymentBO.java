@@ -1,7 +1,6 @@
 package lk.ijse.gdse.eventManage.bo.custom;
 
 import lk.ijse.gdse.eventManage.bo.SuperBo;
-import lk.ijse.gdse.eventManage.dto.FeedbackDto;
 import lk.ijse.gdse.eventManage.dto.PaymentDto;
 
 import java.sql.SQLException;

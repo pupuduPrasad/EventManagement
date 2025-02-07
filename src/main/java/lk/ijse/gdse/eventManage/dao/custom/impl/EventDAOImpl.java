@@ -24,11 +24,23 @@ public class EventDAOImpl implements EventDAO {
     }
 
     public boolean save(Event event) throws SQLException {
-        return CrudUtil.execute("insert into event values(?,?,?,?,?,?)", event.getEventId(), event.getEventName(), event.getEventFaculty(), event.getDescription(), event.getDate(), event.getTime());
+        return CrudUtil.execute("insert into event values(?,?,?,?,?,?)",
+                event.getEventId(),
+                event.getEventName(),
+                event.getEventFaculty(),
+                event.getDescription(),
+                event.getDate(),
+                event.getTime());
     }
 
     public boolean update(Event event) throws SQLException {
-        return CrudUtil.execute("update event set eventName=?, eventFaculty=?, description=?, date=?, time=? where eventId=?", event.getEventName(), event.getEventFaculty(), event.getDescription(), event.getDate(), event.getTime(), event.getEventId());
+        return CrudUtil.execute("update event set eventName=?, eventFaculty=?, description=?, date=?, time=? where eventId=?",
+                event.getEventName(),
+                event.getEventFaculty(),
+                event.getDescription(),
+                event.getDate(),
+                event.getTime(),
+                event.getEventId());
     }
 
     public boolean delete(String eventId) throws SQLException {
