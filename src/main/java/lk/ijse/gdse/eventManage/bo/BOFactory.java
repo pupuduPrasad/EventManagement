@@ -29,8 +29,7 @@ public class BOFactory {
                                         return new UserBOImpl();
                                         case SPONSOR:
                                             return new SponsorBOImpl();
-                                            case SPONSOREVENT:
-                                                return new SponsorEventBOImpl();
+
             default:
                 return null;
         }

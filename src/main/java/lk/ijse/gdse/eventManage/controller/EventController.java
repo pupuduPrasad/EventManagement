@@ -40,22 +40,22 @@ public class EventController implements Initializable {
     private Button btnUpdate;
 
     @FXML
-    private TableColumn<?, ?> colDate;
+    private TableColumn<EventDto, ?> colDate;
 
     @FXML
-    private TableColumn<?, ?> colDescription;
+    private TableColumn<EventDto, ?> colDescription;
 
     @FXML
-    private TableColumn<?, ?> colEventId;
+    private TableColumn<EventDto, ?> colEventId;
 
     @FXML
-    private TableColumn<?, ?> colEventName;
+    private TableColumn<EventDto, ?> colEventName;
 
     @FXML
-    private TableColumn<?, ?> colFaculity;
+    private TableColumn<EventDto, ?> colFaculity;
 
     @FXML
-    private TableColumn<?, ?> colTime;
+    private TableColumn<EventDto, ?> colTime;
 
     @FXML
     private ImageView imageView;

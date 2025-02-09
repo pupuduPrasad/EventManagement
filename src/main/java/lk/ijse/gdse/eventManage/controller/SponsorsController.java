@@ -16,13 +16,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.gdse.eventManage.bo.BOFactory;
 import lk.ijse.gdse.eventManage.bo.custom.SponsorBO;
-import lk.ijse.gdse.eventManage.bo.custom.SponsorEventBO;
 import lk.ijse.gdse.eventManage.dto.EventSponsorsDto;
-import lk.ijse.gdse.eventManage.dto.SponserAndEventDto;
+import lk.ijse.gdse.eventManage.dto.JoinSponserEventDetailDto;
 import lk.ijse.gdse.eventManage.dto.SponsorDto;
 import lk.ijse.gdse.eventManage.dto.tm.SponsorTm;
-import lk.ijse.gdse.eventManage.dao.custom.impl.SponsorEventDAOImpl;
-import lk.ijse.gdse.eventManage.dao.custom.impl.SponsorDAOImpl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -86,7 +83,6 @@ public class SponsorsController implements Initializable {
     private AnchorPane content;
 
         private final SponsorBO sponsorBO = (SponsorBO) BOFactory.getInstance().getBO(BOFactory.BOType.SPONSOR);
-        private final SponsorEventBO sponsorEventBO = (SponsorEventBO) BOFactory.getInstance().getBO(BOFactory.BOType.SPONSOREVENT);
     @FXML
     void acAddEvent(ActionEvent event) {
         try {
@@ -151,10 +147,16 @@ public class SponsorsController implements Initializable {
         SponsorDto sponsorDto = new SponsorDto(sponsorId, sponsorName, phoneNumber, address);
         EventSponsorsDto eventSponsorsDto = new EventSponsorsDto(eventId, sponsorId, amount);
 
-        boolean isSavedS = sponsorBO.save(sponsorDto);
-        boolean isSavedSE = sponsorEventBO.save(eventSponsorsDto);
+        ArrayList<SponsorDto>sponsorDtos = new ArrayList<>();
+        sponsorDtos.add(sponsorDto);
 
-        if (isSavedS && isSavedSE) {
+        ArrayList<EventSponsorsDto>eventSponsorsDtos = new ArrayList<>();
+        eventSponsorsDtos.add(eventSponsorsDto);
+
+        boolean isSavedS = sponsorBO.save(sponsorDtos,eventSponsorsDtos);
+
+
+        if (isSavedS ) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Successfully Saved").show();
         } else {
@@ -174,10 +176,14 @@ public class SponsorsController implements Initializable {
         SponsorDto sponsorDto = new SponsorDto(sponsorId, sponsorName, phoneNumber, address);
         EventSponsorsDto eventSponsorsDto = new EventSponsorsDto(eventId, sponsorId, amount);
 
-        boolean isUpdatedS = sponsorBO.update(sponsorDto);
-        boolean isUpdatedSE = sponsorEventBO.update(eventSponsorsDto);
+        ArrayList<SponsorDto>sponsorDtos = new ArrayList<>();
+        sponsorDtos.add(sponsorDto);
+        ArrayList<EventSponsorsDto>eventSponsorsDtos = new ArrayList<>();
+        eventSponsorsDtos.add(eventSponsorsDto);
 
-        if (isUpdatedS && isUpdatedSE) {
+        boolean isUpdatedS = sponsorBO.update(sponsorDtos,eventSponsorsDtos);
+
+        if (isUpdatedS) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Successfully Updated").show();
         } else {
@@ -232,7 +238,7 @@ public class SponsorsController implements Initializable {
     }
 
     private void loadTableData() throws Exception {
-        ArrayList<SponsorDto> list = sponsorBO.getAll();
+        ArrayList<JoinSponserEventDetailDto> list = sponsorBO.getAll();
         ObservableList<SponsorTm> sponsorTms = FXCollections.observableArrayList();
 
 //        ArrayList<SponserAndEventDto> list = new ArrayList<>();
@@ -247,9 +253,16 @@ public class SponsorsController implements Initializable {
 //            list.add(dto);
 //        }
 
-        for (SponsorDto dto : list) {
-            System.out.println(dto.getEventID());
-            SponsorTm sponsorTm = new SponsorTm(dto.getSId(), dto.getEventID(), dto.getName(), dto.getContactNumber(), dto.getAddress(), dto.getAmount());
+        for (JoinSponserEventDetailDto dto : list) {
+            SponsorTm sponsorTm = new SponsorTm(
+                    dto.getSId(),
+                    dto.getEventId(),
+                    dto.getName(),
+                    dto.getContactNumber(),
+                    dto.getAddress(),
+                    dto.getAmount()
+
+            );
             sponsorTms.add(sponsorTm);
         }
 

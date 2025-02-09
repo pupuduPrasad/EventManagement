@@ -7,11 +7,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class SponsorDto {
+public class JoinSponserEventDetailDto {
     private String sId;
+    private String eventId;
     private String name;
     private String contactNumber;
     private String address;
-
+    private double amount;
 
 }

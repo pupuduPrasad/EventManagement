@@ -1,17 +1,17 @@
-package lk.ijse.gdse.eventManage.dto;
+package lk.ijse.gdse.eventManage.entity;
 
 import lombok.*;
 
 @Setter
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
-public class SponsorDto {
+public class JoinSponserEvent {
     private String sId;
+    private String eventId;
     private String name;
     private String contactNumber;
     private String address;
-
-
+    private double amount;
 }
