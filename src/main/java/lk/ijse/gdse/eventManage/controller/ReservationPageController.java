@@ -92,7 +92,7 @@ public class ReservationPageController implements Initializable {
     ReservationPageController reservationPageController;
 
 //    ReservationDAOImpl reservationDAOImpl = new ReservationDAOImpl();
-    private final ReservationBO reservationBO = (ReservationBO) BOFactory.getInstance().getBO(BOFactory.BOType.RESERVATION);
+    ReservationBO reservationBO = (ReservationBO) BOFactory.getInstance().getBO(BOFactory.BOType.RESERVATION);
 
     @FXML
     void acDelete(ActionEvent event) throws Exception {

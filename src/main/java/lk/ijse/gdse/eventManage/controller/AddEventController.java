@@ -55,7 +55,7 @@ public class AddEventController implements Initializable {
     @Setter
     SponsorsController sponsorsController;
 
-    private final EventBo eventBo= (EventBo) BOFactory.getInstance().getBO(BOFactory.BOType.EVENT);
+    EventBo eventBo= (EventBo) BOFactory.getInstance().getBO(BOFactory.BOType.EVENT);
 
     @FXML
     void btnFinishOnAction(ActionEvent event) {

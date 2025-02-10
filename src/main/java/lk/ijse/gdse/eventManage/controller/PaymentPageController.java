@@ -74,7 +74,8 @@ public class PaymentPageController implements Initializable {
 
     @FXML
     private TextField txtPaymentAmount;
-    private final PaymentBO paymentBO= (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+
+    PaymentBO paymentBO= (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
 
     @FXML
     void acDelete(ActionEvent event) throws Exception {

@@ -59,7 +59,7 @@ public class CustomerController {
     private TextField txtNumber;
 
     //    private final CustomerDAOImpl customerDAOImpl = new CustomerDAOImpl();
-    private final CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
     @FXML
     void acCustomer(MouseEvent event) {
         CustomerTm customerTm = tblCustomer.getSelectionModel().getSelectedItem();

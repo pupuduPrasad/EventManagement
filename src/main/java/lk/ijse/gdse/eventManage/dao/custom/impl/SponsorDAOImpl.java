@@ -24,12 +24,19 @@ public class SponsorDAOImpl implements SponsorDAO {
     }
 
     public boolean save(Sponsor sponsor) throws SQLException {
-        return CrudUtil.execute("insert into sponsors values(?,?,?,?)", sponsor.getSId(), sponsor.getName(), sponsor.getContactNumber(), sponsor.getAddress());
+        return CrudUtil.execute("insert into sponsors values(?,?,?,?)",
+                sponsor.getSId(),
+                sponsor.getName(),
+                sponsor.getContactNumber(),
+                sponsor.getAddress());
     }
 
     public boolean update(Sponsor sponsor) throws SQLException {
-        System.out.println("sponser update");
-        return CrudUtil.execute("update sponsors set name=?, contactNumber=?, address=? where sId=?", sponsor.getName(), sponsor.getContactNumber(), sponsor.getAddress(), sponsor.getSId());
+        return CrudUtil.execute("update sponsors set name=?, contactNumber=?, address=? where sId=?",
+                sponsor.getName(),
+                sponsor.getContactNumber(),
+                sponsor.getAddress(),
+                sponsor.getSId());
     }
 
     public boolean delete(String sponsorId) throws SQLException {

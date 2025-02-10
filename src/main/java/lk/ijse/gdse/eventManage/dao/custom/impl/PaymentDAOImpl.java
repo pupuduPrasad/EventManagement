@@ -24,11 +24,19 @@ public class PaymentDAOImpl implements PaymentDAO {
     }
 
     public boolean save(Payment payment) throws SQLException {
-        return CrudUtil.execute("insert into payment values(?,?,?,?)", payment.getPId(), payment.getDate(), payment.getAmount(), payment.getReservationId());
+        return CrudUtil.execute("insert into payment values(?,?,?,?)",
+                payment.getPId(),
+                payment.getDate(),
+                payment.getAmount(),
+                payment.getReservationId());
     }
 
     public boolean update(Payment payment) throws SQLException {
-        return CrudUtil.execute("update payment set date=?, amount=?, reservationId=? where pId=?", payment.getDate(), payment.getAmount(), payment.getReservationId(), payment.getPId());
+        return CrudUtil.execute("update payment set date=?, amount=?, reservationId=? where pId=?",
+                payment.getDate(),
+                payment.getAmount(),
+                payment.getReservationId(),
+                payment.getPId());
     }
 
     public boolean delete(String paymentId) throws SQLException {
@@ -41,7 +49,11 @@ public class PaymentDAOImpl implements PaymentDAO {
         ArrayList<Payment> paymentDtos = new ArrayList<>();
 
         while (rst.next()) {
-            Payment payment = new Payment(rst.getString(1), rst.getDate(2), rst.getDouble(3), rst.getString(4));
+            Payment payment = new Payment(
+                    rst.getString(1),
+                    rst.getDate(2),
+                    rst.getDouble(3),
+                    rst.getString(4));
             paymentDtos.add(payment);
         }
         return paymentDtos;

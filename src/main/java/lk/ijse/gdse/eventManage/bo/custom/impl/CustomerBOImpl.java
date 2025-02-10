@@ -9,7 +9,7 @@ import lk.ijse.gdse.eventManage.entity.Customer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 public class CustomerBOImpl implements CustomerBO {
-    private final CustomerDAO customerDAO= (CustomerDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.CUSTOMER);
+    CustomerDAO customerDAO= (CustomerDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.CUSTOMER);
     @Override
     public String getNextId() throws SQLException {
         return customerDAO.getNextId();

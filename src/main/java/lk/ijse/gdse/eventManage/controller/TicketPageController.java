@@ -72,7 +72,7 @@ public class TicketPageController implements Initializable {
     @FXML
     private TextField txtPrice;
 
-    private final TicketBO ticketBO = (TicketBO) BOFactory.getInstance().getBO(BOFactory.BOType.TICKET);
+    TicketBO ticketBO = (TicketBO) BOFactory.getInstance().getBO(BOFactory.BOType.TICKET);
 
     @FXML
     void acDelete(ActionEvent event) throws Exception {

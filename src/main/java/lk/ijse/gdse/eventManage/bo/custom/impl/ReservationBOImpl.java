@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ReservationBOImpl implements ReservationBO {
-    private final ReservationDAO reservationDAO= (ReservationDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.RESERVATION);
+    ReservationDAO reservationDAO= (ReservationDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.RESERVATION);
 
     @Override
     public String getNextId() throws SQLException {
@@ -19,12 +19,20 @@ public class ReservationBOImpl implements ReservationBO {
 
     @Override
     public boolean save(ReservationDto entity) throws SQLException {
-        return reservationDAO.save(new Reservation(entity.getRId(),entity.getDate(),entity.getEventVenue(),entity.getEventId()));
+        return reservationDAO.save(new Reservation(
+                entity.getRId()
+                ,entity.getDate(),
+                entity.getEventVenue(),
+                entity.getEventId()));
     }
 
     @Override
     public boolean update(ReservationDto entity) throws SQLException {
-        return reservationDAO.update(new Reservation(entity.getRId(),entity.getDate(),entity.getEventVenue(),entity.getEventId()));
+        return reservationDAO.update(new Reservation(
+                entity.getRId(),
+                entity.getDate(),
+                entity.getEventVenue(),
+                entity.getEventId()));
     }
 
     @Override
@@ -37,12 +45,12 @@ public class ReservationBOImpl implements ReservationBO {
         ArrayList<Reservation> reservationArrayList=reservationDAO.getAll();
         ArrayList<ReservationDto> reservationDtoArrayList=new ArrayList<>();
         for(Reservation reservation:reservationArrayList){
-            ReservationDto reservationDto=new ReservationDto();
-            reservationDto.setRId(reservation.getRId());
-            reservationDto.setDate(reservation.getDate());
-            reservationDto.setEventVenue(reservation.getEventVenue());
-            reservationDto.setEventId(reservation.getEventId());
-            reservationDtoArrayList.add(reservationDto);
+            reservationDtoArrayList.add(new ReservationDto(
+                    reservation.getRId(),
+                    reservation.getDate(),
+                    reservation.getEventVenue(),
+                    reservation.getEventId()
+            ));
 
         }
         return reservationDtoArrayList;

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TicketBOImpl implements TicketBO {
-    private final TicketDAO ticketDAO= (TicketDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.TICKET);
+    TicketDAO ticketDAO= (TicketDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.TICKET);
     @Override
     public String getNextId() throws SQLException {
         return ticketDAO.getNextId();
@@ -18,12 +18,20 @@ public class TicketBOImpl implements TicketBO {
 
     @Override
     public boolean save(TicketDto entity) throws SQLException {
-        return ticketDAO.save(new Ticket(entity.getTicketId(),entity.getPrice(),entity.getCustId(),entity.getEventId()));
+        return ticketDAO.save(new Ticket(
+                entity.getTicketId(),
+                entity.getPrice(),
+                entity.getCustId(),
+                entity.getEventId()));
     }
 
     @Override
     public boolean update(TicketDto entity) throws SQLException {
-        return ticketDAO.update(new Ticket(entity.getTicketId(),entity.getPrice(),entity.getCustId(),entity.getEventId()));
+        return ticketDAO.update(new Ticket(
+                entity.getTicketId(),
+                entity.getPrice(),
+                entity.getCustId(),
+                entity.getEventId()));
     }
 
     @Override
@@ -36,12 +44,12 @@ public class TicketBOImpl implements TicketBO {
         ArrayList<Ticket> tickets = ticketDAO.getAll();
         ArrayList<TicketDto> ticketDtos = new ArrayList<>();
         for (Ticket ticket : tickets) {
-            TicketDto ticketDto = new TicketDto();
-            ticketDto.setTicketId(ticket.getTicketId());
-            ticketDto.setPrice(ticket.getPrice());
-            ticketDto.setCustId(ticket.getCustId());
-            ticketDto.setEventId(ticket.getEventId());
-            ticketDtos.add(ticketDto);
+            ticketDtos.add(new TicketDto(
+                    ticket.getTicketId(),
+                    ticket.getPrice(),
+                    ticket.getCustId(),
+                    ticket.getEventId()
+            ));
         }
         return ticketDtos;
     }

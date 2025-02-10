@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FeedbackBOImpl implements FeedbackBO {
-    private final FeedbackDAO feedbackDAO= (FeedbackDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.FEEDBACK);
+    FeedbackDAO feedbackDAO= (FeedbackDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.FEEDBACK);
     @Override
     public String getNextId() throws SQLException {
         return feedbackDAO.getNextId();
@@ -44,11 +44,11 @@ public class FeedbackBOImpl implements FeedbackBO {
         ArrayList<Feedback> feedbackArrayList = feedbackDAO.getAll();
         ArrayList<FeedbackDto> feedbackDtoList = new ArrayList<>();
         for (Feedback feedback : feedbackArrayList) {
-            FeedbackDto feedbackDto = new FeedbackDto();
-            feedbackDto.setFId(feedback.getFId());
-            feedbackDto.setComment(feedback.getComment());
-            feedbackDto.setCustId(feedback.getCustId());
-            feedbackDtoList.add(feedbackDto);
+            feedbackDtoList.add(new FeedbackDto(
+                    feedback.getFId(),
+                    feedback.getComment(),
+                    feedback.getCustId()
+            ));
 
         }
         return feedbackDtoList;

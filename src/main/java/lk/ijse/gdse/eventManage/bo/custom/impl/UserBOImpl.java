@@ -10,16 +10,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserBOImpl implements UserBO {
-    private final UserDAO userDAO= (UserDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.USER);
+    UserDAO userDAO= (UserDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.USER);
 
     @Override
     public boolean save(UserDto entity) throws SQLException {
-        return userDAO.save(new User(entity.getUserName(),entity.getPassword()));
+        return userDAO.save(new User(
+                entity.getUserName(),
+                entity.getPassword()));
     }
 
     @Override
     public boolean update(UserDto entity) throws SQLException {
-        return userDAO.update(new User(entity.getUserName(),entity.getPassword()));
+        return userDAO.update(new User(
+                entity.getUserName(),
+                entity.getPassword()));
     }
 
     @Override

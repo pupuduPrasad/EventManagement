@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class PaymentBOImpl implements PaymentBO {
-    private final PaymentDAO paymentDAO= (PaymentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.PAYMENT);
+    PaymentDAO paymentDAO= (PaymentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.PAYMENT);
     @Override
     public String getNextId() throws SQLException {
         return paymentDAO.getNextId();
@@ -18,12 +18,20 @@ public class PaymentBOImpl implements PaymentBO {
 
     @Override
     public boolean save(PaymentDto entity) throws SQLException {
-        return paymentDAO.save(new Payment(entity.getPId(),entity.getDate(),entity.getAmount(),entity.getReservationId()));
+        return paymentDAO.save(new Payment(
+                entity.getPId(),
+                entity.getDate(),
+                entity.getAmount(),
+                entity.getReservationId()));
     }
 
     @Override
     public boolean update(PaymentDto entity) throws SQLException {
-        return paymentDAO.update(new Payment(entity.getPId(),entity.getDate(),entity.getAmount(),entity.getReservationId()));
+        return paymentDAO.update(new Payment(
+                entity.getPId(),
+                entity.getDate(),
+                entity.getAmount(),
+                entity.getReservationId()));
     }
 
     @Override
@@ -36,12 +44,12 @@ public class PaymentBOImpl implements PaymentBO {
         ArrayList<Payment> paymentArrayList = paymentDAO.getAll();
         ArrayList<PaymentDto> paymentDtoList = new ArrayList<>();
         for (Payment payment : paymentArrayList) {
-            PaymentDto paymentDto = new PaymentDto();
-            paymentDto.setPId(payment.getPId());
-            paymentDto.setDate(payment.getDate());
-            paymentDto.setAmount(payment.getAmount());
-            paymentDto.setReservationId(payment.getReservationId());
-            paymentDtoList.add(paymentDto);
+            paymentDtoList.add(new PaymentDto(
+                    payment.getPId(),
+                    payment.getDate(),
+                    payment.getAmount(),
+                    payment.getReservationId()
+            ));
         }
         return paymentDtoList;
     }

@@ -24,11 +24,19 @@ public class ReservationDAOImpl implements ReservationDAO {
     }
 
     public boolean save(Reservation reservation) throws SQLException {
-        return CrudUtil.execute("insert into reservation values(?,?,?,?)", reservation.getRId(), reservation.getDate(), reservation.getEventVenue(), reservation.getEventId());
+        return CrudUtil.execute("insert into reservation values(?,?,?,?)",
+                reservation.getRId(),
+                reservation.getDate(),
+                reservation.getEventVenue(),
+                reservation.getEventId());
     }
 
     public boolean update(Reservation reservation) throws SQLException {
-        return CrudUtil.execute("update reservation set date=?, eventVenue=?, eventId=? where rId=?", reservation.getDate(), reservation.getEventVenue(), reservation.getEventId(), reservation.getRId());
+        return CrudUtil.execute("update reservation set date=?, eventVenue=?, eventId=? where rId=?",
+                reservation.getDate(),
+                reservation.getEventVenue(),
+                reservation.getEventId(),
+                reservation.getRId());
     }
 
     public boolean delete(String rId) throws SQLException {
@@ -40,7 +48,11 @@ public class ReservationDAOImpl implements ReservationDAO {
         ArrayList<Reservation> reservationDtos = new ArrayList<>();
 
         while (rst.next()) {
-            Reservation reservation = new Reservation(rst.getString(1), rst.getDate(2), rst.getString(3), rst.getString(4));
+            Reservation reservation = new Reservation(
+                    rst.getString(1),
+                    rst.getDate(2),
+                    rst.getString(3),
+                    rst.getString(4));
             reservationDtos.add(reservation);
         }
         return reservationDtos;

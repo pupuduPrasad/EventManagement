@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EventBOImpl implements EventBo {
-    private final EventDAO eventDAO= (EventDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.EVENT);
+    EventDAO eventDAO= (EventDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.EVENT);
     @Override
     public String getNextId() throws SQLException {
         return eventDAO.getNextId();
@@ -48,14 +48,14 @@ public class EventBOImpl implements EventBo {
         ArrayList<Event> eventArrayList = eventDAO.getAll();
         ArrayList<EventDto> eventDtoArrayList = new ArrayList<>();
         for (Event event : eventArrayList) {
-            EventDto eventDto = new EventDto();
-            eventDto.setEventId(event.getEventId());
-            eventDto.setEventName(event.getEventName());
-            eventDto.setEventFaculty(event.getEventFaculty());
-            eventDto.setDescription(event.getDescription());
-            eventDto.setDate(event.getDate());
-            eventDto.setTime(event.getTime());
-            eventDtoArrayList.add(eventDto);
+            eventDtoArrayList.add(new EventDto(
+                    event.getEventId(),
+                    event.getEventName(),
+                    event.getEventFaculty(),
+                    event.getDescription(),
+                    event.getDate(),
+                    event.getTime()
+            ));
         }
         return eventDtoArrayList;
     }

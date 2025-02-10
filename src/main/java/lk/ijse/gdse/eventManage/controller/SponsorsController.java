@@ -82,7 +82,7 @@ public class SponsorsController implements Initializable {
     @FXML
     private AnchorPane content;
 
-        private final SponsorBO sponsorBO = (SponsorBO) BOFactory.getInstance().getBO(BOFactory.BOType.SPONSOR);
+    SponsorBO sponsorBO = (SponsorBO) BOFactory.getInstance().getBO(BOFactory.BOType.SPONSOR);
     @FXML
     void acAddEvent(ActionEvent event) {
         try {

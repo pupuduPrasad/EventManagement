@@ -23,11 +23,19 @@ public class TicketDAOImpl implements TicketDAO {
     }
 
     public boolean save(Ticket ticket) throws SQLException {
-        return CrudUtil.execute("insert into ticket values(?,?,?,?)", ticket.getTicketId(), ticket.getPrice(), ticket.getCustId(), ticket.getEventId());
+        return CrudUtil.execute("insert into ticket values(?,?,?,?)",
+                ticket.getTicketId(),
+                ticket.getPrice(),
+                ticket.getCustId(),
+                ticket.getEventId());
     }
 
     public boolean update(Ticket ticket) throws SQLException {
-        return CrudUtil.execute("update ticket set price=?, custId=?, eventId=? where ticketId=?", ticket.getPrice(), ticket.getCustId(), ticket.getEventId(), ticket.getTicketId());
+        return CrudUtil.execute("update ticket set price=?, custId=?, eventId=? where ticketId=?",
+                ticket.getPrice(),
+                ticket.getCustId(),
+                ticket.getEventId(),
+                ticket.getTicketId());
     }
 
     public boolean delete(String ticketId) throws SQLException {
@@ -40,7 +48,11 @@ public class TicketDAOImpl implements TicketDAO {
         ArrayList<Ticket> ticketDtos = new ArrayList<>();
 
         while (rst.next()) {
-            Ticket ticket = new Ticket(rst.getString(1), rst.getDouble(2), rst.getString(3), rst.getString(4));
+            Ticket ticket = new Ticket(
+                    rst.getString(1),
+                    rst.getDouble(2),
+                    rst.getString(3),
+                    rst.getString(4));
             ticketDtos.add(ticket);
         }
         return ticketDtos;

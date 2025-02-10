@@ -44,7 +44,7 @@ public class UserController implements Initializable {
     @Setter
     private DashboardController dashboardController;
 
-    private final UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
 
     @FXML
     void addUserOnAction(ActionEvent event) throws SQLException {

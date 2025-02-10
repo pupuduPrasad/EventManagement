@@ -88,7 +88,7 @@ public class EventController implements Initializable {
     @FXML
     private AnchorPane content;
 
-    private final EventBo eventBo= (EventBo) BOFactory.getInstance().getBO(BOFactory.BOType.EVENT);
+    EventBo eventBo= (EventBo) BOFactory.getInstance().getBO(BOFactory.BOType.EVENT);
     @FXML
     void deleteAction(ActionEvent event) throws Exception {
         String eventId = lblEventId.getText();

@@ -43,7 +43,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public boolean save(User user) throws SQLException {
-        return CrudUtil.execute("insert into user values(?,?)", user.getUserName(), user.getPassword());
+        return CrudUtil.execute("insert into user values(?,?)",
+                user.getUserName(),
+                user.getPassword());
     }
 
 

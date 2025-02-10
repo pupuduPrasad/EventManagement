@@ -55,7 +55,7 @@ public class FeedBackController {
     private Label lblFeedbackId;
 
     //    FeedbackDAOImpl feedbackDAOImpl = new FeedbackDAOImpl();
-    private final FeedbackBO feedbackBo = (FeedbackBO) BOFactory.getInstance().getBO(BOFactory.BOType.FEEDBACK);
+    FeedbackBO feedbackBo = (FeedbackBO) BOFactory.getInstance().getBO(BOFactory.BOType.FEEDBACK);
     @FXML
     void DeleteFeedBack(ActionEvent event) throws Exception {
         String fId = lblFeedbackId.getText();

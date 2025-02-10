@@ -45,7 +45,8 @@ public class AddReservationController implements Initializable {
 
     @Setter
     PaymentPageController paymentPageController;
-    private final ReservationBO reservationBO = (ReservationBO) BOFactory.getInstance().getBO(BOFactory.BOType.RESERVATION);
+
+    ReservationBO reservationBO = (ReservationBO) BOFactory.getInstance().getBO(BOFactory.BOType.RESERVATION);
 
     @FXML
     void btnFinishOnAction(ActionEvent event) {
