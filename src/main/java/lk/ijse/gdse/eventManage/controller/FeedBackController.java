@@ -54,7 +54,6 @@ public class FeedBackController {
     @FXML
     private Label lblFeedbackId;
 
-    //    FeedbackDAOImpl feedbackDAOImpl = new FeedbackDAOImpl();
     FeedbackBO feedbackBo = (FeedbackBO) BOFactory.getInstance().getBO(BOFactory.BOType.FEEDBACK);
     @FXML
     void DeleteFeedBack(ActionEvent event) throws Exception {
@@ -109,12 +108,21 @@ public class FeedBackController {
 
     @FXML
     void SaveFeedBack(ActionEvent event) throws Exception {
+        // Get next feedback ID
         String fId = lblFeedbackId.getText();
         String comment = txtFeedBack.getText();
-        String custId = txtFeedBack.getText();
+        String custId = lblCustomerId.getText();
 
+        // Ensure feedbackId is set (call the method to generate the next ID if it's empty)
+        if (fId == null || fId.isEmpty()) {
+            fId = feedbackBo.getNextId();  // Fetch the next ID
+            lblFeedbackId.setText(fId);    // Set it on the label
+        }
+
+        // Create FeedbackDto object
         FeedbackDto feedbackDto = new FeedbackDto(fId, comment, custId);
 
+        // Save feedback
         boolean isSaved = feedbackBo.save(feedbackDto);
 
         if (isSaved) {
@@ -124,6 +132,7 @@ public class FeedBackController {
             new Alert(Alert.AlertType.ERROR, "Failed to save feedback!").show();
         }
     }
+
 
 
 
@@ -145,7 +154,6 @@ public class FeedBackController {
     void acCustomer(ActionEvent event) {
 
     }
-
     @FXML
     public void initialize() {
         colFeedbackId.setCellValueFactory(new PropertyValueFactory<>("fId"));
@@ -153,7 +161,11 @@ public class FeedBackController {
         colFeedBack.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
         try {
+            // Load the feedback table data
             loadTableData();
+
+            // Set the next Feedback ID
+            getNextFeedbackId();
         } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load feedback data!").show();

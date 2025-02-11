@@ -137,6 +137,10 @@ public class SponsorsController implements Initializable {
 
     @FXML
     void acSave(ActionEvent event) throws Exception {
+        if (!validateInputs()) {
+            return;
+        }
+
         String sponsorId = lblSponsorId.getText();
         String eventId = lblEventId.getText();
         String sponsorName = txtName.getText();
@@ -147,16 +151,14 @@ public class SponsorsController implements Initializable {
         SponsorDto sponsorDto = new SponsorDto(sponsorId, sponsorName, phoneNumber, address);
         EventSponsorsDto eventSponsorsDto = new EventSponsorsDto(eventId, sponsorId, amount);
 
-        ArrayList<SponsorDto>sponsorDtos = new ArrayList<>();
+        ArrayList<SponsorDto> sponsorDtos = new ArrayList<>();
         sponsorDtos.add(sponsorDto);
-
-        ArrayList<EventSponsorsDto>eventSponsorsDtos = new ArrayList<>();
+        ArrayList<EventSponsorsDto> eventSponsorsDtos = new ArrayList<>();
         eventSponsorsDtos.add(eventSponsorsDto);
 
-        boolean isSavedS = sponsorBO.save(sponsorDtos,eventSponsorsDtos);
+        boolean isSavedS = sponsorBO.save(sponsorDtos, eventSponsorsDtos);
 
-
-        if (isSavedS ) {
+        if (isSavedS) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Successfully Saved").show();
         } else {
@@ -166,6 +168,10 @@ public class SponsorsController implements Initializable {
 
     @FXML
     void acUpdate(ActionEvent event) throws Exception {
+        if (!validateInputs()) {
+            return;
+        }
+
         String sponsorId = lblSponsorId.getText();
         String eventId = lblEventId.getText();
         String sponsorName = txtName.getText();
@@ -176,12 +182,12 @@ public class SponsorsController implements Initializable {
         SponsorDto sponsorDto = new SponsorDto(sponsorId, sponsorName, phoneNumber, address);
         EventSponsorsDto eventSponsorsDto = new EventSponsorsDto(eventId, sponsorId, amount);
 
-        ArrayList<SponsorDto>sponsorDtos = new ArrayList<>();
+        ArrayList<SponsorDto> sponsorDtos = new ArrayList<>();
         sponsorDtos.add(sponsorDto);
-        ArrayList<EventSponsorsDto>eventSponsorsDtos = new ArrayList<>();
+        ArrayList<EventSponsorsDto> eventSponsorsDtos = new ArrayList<>();
         eventSponsorsDtos.add(eventSponsorsDto);
 
-        boolean isUpdatedS = sponsorBO.update(sponsorDtos,eventSponsorsDtos);
+        boolean isUpdatedS = sponsorBO.update(sponsorDtos, eventSponsorsDtos);
 
         if (isUpdatedS) {
             refreshPage();
@@ -190,6 +196,40 @@ public class SponsorsController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Failed to Update").show();
         }
     }
+
+    private boolean validateInputs() {
+        String name = txtName.getText().trim();
+        String contact = txtContact.getText().trim();
+        String amountText = txtAmount.getText().trim();
+
+        if (!name.matches("^[A-Za-z ]{3,}$")) {
+            showAlert(Alert.AlertType.ERROR, "Invalid Name! Name must contain at least 3 letters.");
+            return false;
+        }
+
+        if (!contact.matches("^(07[0-9]{8})$")) {
+            showAlert(Alert.AlertType.ERROR, "Invalid Contact Number! It should be a 10-digit number starting with 07.");
+            return false;
+        }
+
+        try {
+            double amount = Double.parseDouble(amountText);
+            if (amount <= 0) {
+                showAlert(Alert.AlertType.ERROR, "Invalid Amount! Amount should be a positive number.");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Invalid Amount! Please enter a valid number.");
+            return false;
+        }
+
+        return true;
+    }
+    private void showAlert(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType, message, ButtonType.OK);
+        alert.show();
+    }
+
 
     @FXML
     void tblAction(MouseEvent event) {
@@ -203,7 +243,6 @@ public class SponsorsController implements Initializable {
             txtAmount.setText(String.valueOf(sponsorTm.getAmount()));
         }
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colSponsorId.setCellValueFactory(new PropertyValueFactory<>("sId"));
@@ -217,20 +256,22 @@ public class SponsorsController implements Initializable {
             refreshPage();
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load Data!");
+            new Alert(Alert.AlertType.ERROR, "Failed to load Data!").show();
         }
     }
 
-    private void refreshPage() throws Exception {
-        loadNextSponsorId();
-        loadTableData();
 
+
+    private void refreshPage() throws Exception {
+        loadTableData();
+        loadNextSponsorId();
         lblEventId.setText("");
         txtName.setText("");
         txtContact.setText("");
         txtAddress.setText("");
         txtAmount.setText("");
     }
+
 
     private void loadNextSponsorId() throws Exception {
         String nextSponsorId = sponsorBO.getNextId();
@@ -239,36 +280,34 @@ public class SponsorsController implements Initializable {
 
     private void loadTableData() throws Exception {
         ArrayList<JoinSponserEventDetailDto> list = sponsorBO.getAll();
+
+        // If list is null or empty, do not update the table
+        if (list == null || list.isEmpty()) {
+            System.out.println("No data found!"); // Debugging check
+            tbtSponsor.setItems(FXCollections.observableArrayList()); // Clear table if empty
+            return;
+        }
+
+        // Convert to ObservableList
         ObservableList<SponsorTm> sponsorTms = FXCollections.observableArrayList();
 
-//        ArrayList<SponserAndEventDto> list = new ArrayList<>();
-//        for (SponsorDto sponsorDto : lis) {
-//            SponserAndEventDto dto = new SponserAndEventDto();
-//            dto.setSId(sponsorDto.getSId());
-//            dto.setEventId(sponsorDto.getEventID());
-//            dto.setName(sponsorDto.getName());
-//            dto.setContactNumber(sponsorDto.getContactNumber());
-//            dto.setAddress(sponsorDto.getAddress());
-//            dto.setAmount(sponsorDto.getAmount());
-//            list.add(dto);
-//        }
-
         for (JoinSponserEventDetailDto dto : list) {
-            SponsorTm sponsorTm = new SponsorTm(
+            sponsorTms.add(new SponsorTm(
                     dto.getSId(),
                     dto.getEventId(),
                     dto.getName(),
                     dto.getContactNumber(),
                     dto.getAddress(),
                     dto.getAmount()
-
-            );
-            sponsorTms.add(sponsorTm);
+            ));
         }
 
+        // Update TableView
         tbtSponsor.setItems(sponsorTms);
-
+        tbtSponsor.refresh(); // Force UI to update
     }
+
+
 
     public void navigateTo(String fxmlPath) {
         try {
@@ -286,6 +325,7 @@ public class SponsorsController implements Initializable {
     }
 
     public void setEventId(String eventId) {
+
         lblEventId.setText(eventId);
     }
 }

@@ -91,7 +91,6 @@ public class ReservationPageController implements Initializable {
     @Setter
     ReservationPageController reservationPageController;
 
-//    ReservationDAOImpl reservationDAOImpl = new ReservationDAOImpl();
     ReservationBO reservationBO = (ReservationBO) BOFactory.getInstance().getBO(BOFactory.BOType.RESERVATION);
 
     @FXML
@@ -152,11 +151,27 @@ public class ReservationPageController implements Initializable {
         picReservationDate.setValue(null);
         txtVenue.setText("");
         lblEventId.setText("");
+        lblDate.setText("");
 
     }
 
     @FXML
     void acSave(ActionEvent event) throws Exception {
+        // Validation for required fields
+        if (picReservationDate.getValue() == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select a reservation date.").show();
+            return;
+        }
+
+        if (txtVenue.getText().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Please enter an event venue.").show();
+            return;
+        }
+
+        if (lblEventId.getText().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Event ID is missing. Please select an event.").show();
+            return;
+        }
 
         String rId = lblReservationId.getText();
         LocalDate localDate = picReservationDate.getValue();
@@ -164,7 +179,7 @@ public class ReservationPageController implements Initializable {
         String eventVenue = txtVenue.getText();
         String eventId = lblEventId.getText();
 
-
+        // Create ReservationDto and save
         ReservationDto reservationDto = new ReservationDto(rId, date, eventVenue, eventId);
         boolean isSaved = reservationBO.save(reservationDto);
 
@@ -174,38 +189,49 @@ public class ReservationPageController implements Initializable {
         } else {
             new Alert(Alert.AlertType.ERROR, "Reservation Not Saved").show();
         }
-
     }
 
+
     @FXML
-    void acUpdate(ActionEvent event) throws SQLException {
+    void acUpdate(ActionEvent event) throws Exception {
+        if (txtVenue.getText().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Please enter an event venue.").show();
+            return;
+        }
+
+        if (lblEventId.getText().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Event ID is missing. Please select an event.").show();
+            return;
+        }
+
+        LocalDate reservationDate = picReservationDate.getValue();
+        if (reservationDate == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select a reservation date.").show();
+            return;
+        }
+
+        Date dateD = Date.from(reservationDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
         String rId = lblReservationId.getText();
-        String date = lblDate.getText();
         String eventVenue = txtVenue.getText();
         String eventId = lblEventId.getText();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        ReservationDto reservationDto = new ReservationDto(rId, dateD, eventVenue, eventId);
 
-        try {
-            Date dateD = formatter.parse(date);
-            ReservationDto reservationDto = new ReservationDto(rId ,dateD, eventVenue,eventId);
-            boolean isUpdated = reservationBO.update(reservationDto);
+        boolean isUpdated = reservationBO.update(reservationDto);
 
-            if (isUpdated) {
-                refreshPage();
-                new Alert(Alert.AlertType.INFORMATION, "Event Saved").show();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Event Not Saved").show();
-            }
-        } catch (ParseException e) {
-            System.out.println("Invalid date format!");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if (isUpdated) {
+            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Reservation Updated").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Reservation Not Updated").show();
         }
     }
 
 
-        @FXML
+
+
+    @FXML
     void addAc(ActionEvent event)  {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddEvent.fxml"));

@@ -85,7 +85,5 @@ public class LoginController {
         primaryStage.centerOnScreen();
         primaryStage.show();
     }
-
-
 }
 

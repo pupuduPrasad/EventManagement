@@ -100,11 +100,10 @@ public class UserController implements Initializable {
             }
         }
     }
+
     @FXML
     void homeAc(ActionEvent event) {
         navigateTo("/view/dashboard.fxml");
-
-
     }
 
     @FXML
@@ -113,9 +112,6 @@ public class UserController implements Initializable {
             btnRemove.setDisable(false);
         }
     }
-
-//    UserDAOImpl userDAOImpl = new UserDAOImpl();
-
     private void loadUsernames() throws SQLException {
         ArrayList<String> usernames = userBO.getAllUserNames();
         ObservableList<String> observableList = FXCollections.observableArrayList();

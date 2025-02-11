@@ -35,51 +35,30 @@ public class DashboardController implements Initializable {
     void eventAc(ActionEvent event) {
         navigateTo("/view/event.fxml");
     }
-
     @FXML
-    void feedbackAc(ActionEvent event) {
-        navigateTo("/view/feedbacklayout.fxml");
-
-    }
-
+    void feedbackAc(ActionEvent event) {navigateTo("/view/feedbacklayout.fxml");}
     @FXML
     void paymentAc(ActionEvent event) {
         navigateTo("/view/payment.fxml");
     }
-
     @FXML
     void reservationAc(ActionEvent event) {
         navigateTo("/view/reservation.fxml");
     }
-
     @FXML
     void sponsorsAc(ActionEvent event) {
         navigateTo("/view/Sponsors.fxml");
     }
-
     @FXML
-    void studentAc(ActionEvent event) {
-        navigateTo("/view/Customer.fxml");
-
-    }
-
+    void studentAc(ActionEvent event) {navigateTo("/view/Customer.fxml");}
     @FXML
     void ticketAc(ActionEvent event) {
         navigateTo("/view/ticket.fxml");
     }
-
     @FXML
-    void userAc(ActionEvent event) {
-        navigateTo("/view/AddUser.fxml");
-
-    }
-
+    void userAc(ActionEvent event) {navigateTo("/view/AddUser.fxml");}
     @FXML
-    void logoutAc(ActionEvent event) {
-        navigateTo("/view/loginView.fxml");
-
-
-    }
+    void logoutAc(ActionEvent event) {navigateTo("/view/loginView.fxml");}
 
     public void navigateTo(String fxmlPath) {
         try {

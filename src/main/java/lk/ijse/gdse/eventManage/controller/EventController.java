@@ -31,41 +31,16 @@ import java.util.ResourceBundle;
 public class EventController implements Initializable {
 
     @FXML
-    private Button btDelete;
+    private Button btDelete, btnSave, btnUpdate;
 
     @FXML
-    private Button btnSave;
-
-    @FXML
-    private Button btnUpdate;
-
-    @FXML
-    private TableColumn<EventDto, ?> colDate;
-
-    @FXML
-    private TableColumn<EventDto, ?> colDescription;
-
-    @FXML
-    private TableColumn<EventDto, ?> colEventId;
-
-    @FXML
-    private TableColumn<EventDto, ?> colEventName;
-
-    @FXML
-    private TableColumn<EventDto, ?> colFaculity;
-
-    @FXML
-    private TableColumn<EventDto, ?> colTime;
+    private TableColumn<EventDto, ?> colDate, colDescription, colEventId, colEventName, colFaculity, colTime;
 
     @FXML
     private ImageView imageView;
 
     @FXML
-    private Label lblDate;
-
-    @FXML
-    private Label lblEventId;
-
+    private Label lblDate, lblEventId;
 
     @FXML
     private DatePicker picDate;
@@ -74,36 +49,32 @@ public class EventController implements Initializable {
     private TableView<EventTm> tblEvent;
 
     @FXML
-    private TextField txtDescription;
-
-    @FXML
-    private TextField txtFaculty;
-
-    @FXML
-    private TextField txtTime;
-
-    @FXML
-    private TextField txtTitle;
+    private TextField txtDescription, txtFaculty, txtTime, txtTitle;
 
     @FXML
     private AnchorPane content;
 
-    EventBo eventBo= (EventBo) BOFactory.getInstance().getBO(BOFactory.BOType.EVENT);
+    EventBo eventBo = (EventBo) BOFactory.getInstance().getBO(BOFactory.BOType.EVENT);
+
     @FXML
     void deleteAction(ActionEvent event) throws Exception {
         String eventId = lblEventId.getText();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure?", ButtonType.YES, ButtonType.NO);
+        if (eventId.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "No Event Selected for Deletion!").show();
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this event?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-
             boolean isDeleted = eventBo.delete(eventId);
             if (isDeleted) {
                 refreshPage();
-                new Alert(Alert.AlertType.INFORMATION, "Event deleted...!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Event Deleted Successfully!").show();
             } else {
-                new Alert(Alert.AlertType.ERROR, "Fail to delete Event...!").show();
+                new Alert(Alert.AlertType.ERROR, "Failed to Delete Event!").show();
             }
         }
     }
@@ -120,6 +91,8 @@ public class EventController implements Initializable {
 
     @FXML
     void saveOnAction(ActionEvent event) throws Exception {
+        if (!validateInputs()) return;
+
         String eventId = lblEventId.getText();
         String eventName = txtTitle.getText();
         String eventFaculty = txtFaculty.getText();
@@ -129,65 +102,65 @@ public class EventController implements Initializable {
         String time = txtTime.getText();
 
         EventDto eventDto = new EventDto(eventId, eventName, eventFaculty, description, date, time);
-
         boolean isSaved = eventBo.save(eventDto);
 
         if (isSaved) {
             refreshPage();
-            new Alert(Alert.AlertType.INFORMATION, "Event Saved").show();
+            new Alert(Alert.AlertType.INFORMATION, "Event Saved Successfully!").show();
         } else {
-            new Alert(Alert.AlertType.ERROR, "Event Not Saved").show();
+            new Alert(Alert.AlertType.ERROR, "Failed to Save Event!").show();
         }
     }
 
     @FXML
     void tblEventAction(MouseEvent event) {
         EventTm eventTm = tblEvent.getSelectionModel().getSelectedItem();
-        if (eventTm != null) {
-            lblEventId.setText(eventTm.getEventId());
-            txtTitle.setText(eventTm.getEventName());
-            txtFaculty.setText(eventTm.getEventFaculty());
-            txtDescription.setText(eventTm.getDescription());
-            lblDate.setText(eventTm.getDate().toString());
-            txtTime.setText(eventTm.getTime());
+        if (eventTm == null) {
+            new Alert(Alert.AlertType.WARNING, "Please Select an Event from the Table!").show();
+            return;
         }
+
+        lblEventId.setText(eventTm.getEventId());
+        txtTitle.setText(eventTm.getEventName());
+        txtFaculty.setText(eventTm.getEventFaculty());
+        txtDescription.setText(eventTm.getDescription());
+        lblDate.setText(eventTm.getDate().toString());
+        txtTime.setText(eventTm.getTime());
     }
 
     @FXML
     void updateAction(ActionEvent event) throws Exception {
+        if (!validateInputs()) return;
+
         String eventId = lblEventId.getText();
         String eventName = txtTitle.getText();
         String eventFaculty = txtFaculty.getText();
         String description = txtDescription.getText();
-        String date = lblDate.getText();
         String time = txtTime.getText();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        try {
-            Date dateD = formatter.parse(date);
-            EventDto eventDto = new EventDto(eventId, eventName, eventFaculty, description, dateD, time);
-            boolean isUpdated = eventBo.update(eventDto);
+        LocalDate selectedDate = picDate.getValue();
 
-            if (isUpdated) {
-                refreshPage();
-                new Alert(Alert.AlertType.INFORMATION, "Event Saved").show();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Event Not Saved").show();
-            }
-        } catch (ParseException e) {
-            System.out.println("Invalid date format!");
+        if (selectedDate == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select an event date.").show();
+            return;
         }
 
+        Date dateD = Date.from(selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        EventDto eventDto = new EventDto(eventId, eventName, eventFaculty, description, dateD, time);
 
-
-
-
+        boolean isUpdated = eventBo.update(eventDto);
+        if (isUpdated) {
+            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Event Updated Successfully!").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to Update Event!").show();
+        }
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Image loginImage = new Image(getClass().getResourceAsStream("/image/events.jpg"));
-        imageView.setImage(loginImage);
+        imageView.setImage(new Image(getClass().getResourceAsStream("/image/events.jpg")));
 
         colEventId.setCellValueFactory(new PropertyValueFactory<>("eventId"));
         colEventName.setCellValueFactory(new PropertyValueFactory<>("eventName"));
@@ -199,8 +172,7 @@ public class EventController implements Initializable {
         try {
             refreshPage();
         } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load Data!");
+            new Alert(Alert.AlertType.ERROR, "Failed to Load Data!").show();
         }
     }
 
@@ -208,23 +180,20 @@ public class EventController implements Initializable {
         getNextEventId();
         loadTableData();
 
-        txtTitle.setText("");
-        txtFaculty.setText("");
-        txtDescription.setText("");
+        txtTitle.clear();
+        txtFaculty.clear();
+        txtDescription.clear();
         picDate.setValue(null);
-        txtTime.setText("");
+        txtTime.clear();
         lblDate.setText("");
     }
 
-//    EventDAOImpl eventDAOImpl = new EventDAOImpl();
-
     private void loadTableData() throws Exception {
         ArrayList<EventDto> eventDtos = eventBo.getAll();
-
         ObservableList<EventTm> eventTms = FXCollections.observableArrayList();
 
-        for (EventDto customer : eventDtos) {
-            EventTm eventTm = new EventTm(customer.getEventId(), customer.getEventName(), customer.getEventFaculty(), customer.getDescription(), customer.getDate(), customer.getTime());
+        for (EventDto event : eventDtos) {
+            EventTm eventTm = new EventTm(event.getEventId(), event.getEventName(), event.getEventFaculty(), event.getDescription(), event.getDate(), event.getTime());
             eventTms.add(eventTm);
         }
 
@@ -240,14 +209,30 @@ public class EventController implements Initializable {
         try {
             content.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
-
             load.prefWidthProperty().bind(content.widthProperty());
             load.prefHeightProperty().bind(content.heightProperty());
-
             content.getChildren().add(load);
         } catch (IOException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
+            new Alert(Alert.AlertType.ERROR, "Failed to Load Page!").show();
         }
+    }
+
+    private boolean validateInputs() {
+        if (txtTitle.getText().isEmpty() || txtFaculty.getText().isEmpty() || txtDescription.getText().isEmpty() || txtTime.getText().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "All Fields Are Required!").show();
+            return false;
+        }
+
+        if (picDate.getValue() == null) {
+            new Alert(Alert.AlertType.WARNING, "Please Select a Valid Date!").show();
+            return false;
+        }
+
+        if (!txtTime.getText().matches("\\d{2}:\\d{2}")) {
+            new Alert(Alert.AlertType.WARNING, "Invalid Time Format! Use HH:mm").show();
+            return false;
+        }
+
+        return true;
     }
 }

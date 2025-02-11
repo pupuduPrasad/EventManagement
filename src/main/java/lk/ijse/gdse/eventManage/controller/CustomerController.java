@@ -58,7 +58,6 @@ public class CustomerController {
     @FXML
     private TextField txtNumber;
 
-    //    private final CustomerDAOImpl customerDAOImpl = new CustomerDAOImpl();
     CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
     @FXML
     void acCustomer(MouseEvent event) {
@@ -101,8 +100,15 @@ public class CustomerController {
         String name = txtName.getText().trim();
         String coNumber = txtNumber.getText().trim();
 
-        if (name.isEmpty() || coNumber.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Fields cannot be empty.");
+        // Validate Customer Name
+        if (!name.matches("[A-Za-z ]{3,}")) {
+            showAlert(Alert.AlertType.ERROR, "Invalid name! Name should contain only letters and be at least 3 characters long.");
+            return;
+        }
+
+        // Validate Contact Number
+        if (!coNumber.matches("\\d{10}")) {
+            showAlert(Alert.AlertType.ERROR, "Invalid contact number! It should contain exactly 10 digits.");
             return;
         }
 
@@ -127,27 +133,36 @@ public class CustomerController {
         }
     }
 
+
     @FXML
     void acSave(ActionEvent event) throws Exception {
         String custId = lblCustomer.getText();
         String name = txtName.getText().trim();
-        int coNumber = Integer.parseInt(txtNumber.getText().trim());
+        String coNumber = txtNumber.getText().trim();
 
-        CustomerDto customerDto = new CustomerDto(custId,name,coNumber);
+        // Validate Customer Name
+        if (!name.matches("[A-Za-z ]{3,}")) {
+            showAlert(Alert.AlertType.ERROR, "Invalid name! Name should contain only letters and be at least 3 characters long.");
+            return;
+        }
+
+        // Validate Contact Number
+        if (!coNumber.matches("\\d{10}")) {
+            showAlert(Alert.AlertType.ERROR, "Invalid contact number! It should contain exactly 10 digits.");
+            return;
+        }
+
+        int number = Integer.parseInt(coNumber);
+        CustomerDto customerDto = new CustomerDto(custId, name, number);
 
         try {
-            int number = Integer.parseInt(String.valueOf(coNumber));
-            CustomerDto updatedCustomer = new CustomerDto(customerDto.getCustId(), name, number);
-
-            boolean isSaved = customerBO.save(updatedCustomer);
+            boolean isSaved = customerBO.save(customerDto);
             if (isSaved) {
                 refreshTable();
-                showAlert(Alert.AlertType.INFORMATION, "Customer Save successfully.");
+                showAlert(Alert.AlertType.INFORMATION, "Customer saved successfully.");
             } else {
-                showAlert(Alert.AlertType.ERROR, "Failed to Save customer.");
+                showAlert(Alert.AlertType.ERROR, "Failed to save customer.");
             }
-        } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Invalid number format. Please enter a valid integer.");
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Database error: " + e.getMessage());
@@ -155,6 +170,7 @@ public class CustomerController {
             throw new RuntimeException(e);
         }
     }
+
 
     @FXML
     void homeAction(ActionEvent event) {

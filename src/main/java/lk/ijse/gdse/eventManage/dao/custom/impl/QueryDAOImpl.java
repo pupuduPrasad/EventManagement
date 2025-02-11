@@ -1,8 +1,7 @@
 package lk.ijse.gdse.eventManage.dao.custom.impl;
 
-import lk.ijse.gdse.eventManage.dao.CrudUtil;
-import lk.ijse.gdse.eventManage.dao.QueryDAO;
-import lk.ijse.gdse.eventManage.dto.JoinSponserEventDetailDto;
+import lk.ijse.gdse.eventManage.util.CrudUtil;
+import lk.ijse.gdse.eventManage.dao.custom.QueryDAO;
 import lk.ijse.gdse.eventManage.entity.JoinSponserEvent;
 
 import java.sql.ResultSet;

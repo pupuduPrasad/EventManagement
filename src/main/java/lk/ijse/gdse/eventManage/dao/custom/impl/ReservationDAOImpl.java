@@ -1,6 +1,6 @@
 package lk.ijse.gdse.eventManage.dao.custom.impl;
 
-import lk.ijse.gdse.eventManage.dao.CrudUtil;
+import lk.ijse.gdse.eventManage.util.CrudUtil;
 import lk.ijse.gdse.eventManage.dao.custom.ReservationDAO;
 import lk.ijse.gdse.eventManage.entity.Reservation;
 

@@ -124,29 +124,71 @@ public class PaymentPageController implements Initializable {
         refreshPage();
 
     }
-//    PaymentDAOImpl paymentDAOImpl = new PaymentDAOImpl();
+@FXML
+void acSave(ActionEvent event) {
+    try {
+        String paymentId = lblPayId.getText();
+        String reservationId = lblReservationId.getText();
+        String paymentDateString = lblPaymentDate.getText();
+        String paymentAmountString = txtPaymentAmount.getText();
+
+        if (!isValidPaymentAmount(paymentAmountString)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid amount! Please enter a valid positive number.").show();
+            return;
+        }
+
+        LocalDate localDate = LocalDate.parse(paymentDateString);
+        Date paymentDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        double paymentAmount = Double.parseDouble(paymentAmountString);
+
+        PaymentDto paymentDto = new PaymentDto(paymentId, paymentDate, paymentAmount, reservationId);
+
+        boolean isSaved = paymentBO.save(paymentDto);
+
+        if (isSaved) {
+            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Payment Saved").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Payment Not Saved").show();
+        }
+    } catch (NumberFormatException e) {
+        new Alert(Alert.AlertType.ERROR, "Invalid amount! Please enter a valid number.").show();
+    } catch (Exception e) {
+        new Alert(Alert.AlertType.ERROR, "An error occurred: " + e.getMessage()).show();
+        e.printStackTrace();
+    }
+}
+
+
     @FXML
-    void acSave(ActionEvent event) {
+    void acUpdate(ActionEvent event) {
         try {
             String paymentId = lblPayId.getText();
             String reservationId = lblReservationId.getText();
             String paymentDateString = lblPaymentDate.getText();
             String paymentAmountString = txtPaymentAmount.getText();
 
+            if (paymentId.isEmpty()) {
+                new Alert(Alert.AlertType.ERROR, "Payment ID is required for updating.").show();
+                return;
+            }
+            if (!isValidPaymentAmount(paymentAmountString)) {
+                new Alert(Alert.AlertType.ERROR, "Invalid amount! Please enter a valid positive number.").show();
+                return;
+            }
+
             LocalDate localDate = LocalDate.parse(paymentDateString);
             Date paymentDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
             double paymentAmount = Double.parseDouble(paymentAmountString);
-
             PaymentDto paymentDto = new PaymentDto(paymentId, paymentDate, paymentAmount, reservationId);
+            boolean isUpdated = paymentBO.update(paymentDto);
 
-            boolean isSaved = paymentBO.save(paymentDto);
-
-            if (isSaved) {
+            if (isUpdated) {
                 refreshPage();
-                new Alert(Alert.AlertType.INFORMATION, "Payment Saved").show();
+                new Alert(Alert.AlertType.INFORMATION, "Payment Updated").show();
             } else {
-                new Alert(Alert.AlertType.ERROR, "Payment Not Saved").show();
+                new Alert(Alert.AlertType.ERROR, "Payment Not Updated").show();
             }
         } catch (NumberFormatException e) {
             new Alert(Alert.AlertType.ERROR, "Invalid amount! Please enter a valid number.").show();
@@ -155,41 +197,19 @@ public class PaymentPageController implements Initializable {
             e.printStackTrace();
         }
     }
+    private boolean isValidPaymentAmount(String amountString) {
+        if (amountString == null || amountString.isEmpty()) {
+            return false;
+        }
 
-    @FXML
-    void acUpdate(ActionEvent event) {
-            try {
-                String paymentId = lblPayId.getText();
-                String reservationId = lblReservationId.getText();
-                String paymentDateString = lblPaymentDate.getText();
-                String paymentAmountString = txtPaymentAmount.getText();
-
-                if (paymentId.isEmpty()) {
-                    new Alert(Alert.AlertType.ERROR, "Payment ID is required for updating.").show();
-                    return;
-                }
-
-                LocalDate localDate = LocalDate.parse(paymentDateString);
-                Date paymentDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-                double paymentAmount = Double.parseDouble(paymentAmountString);
-                PaymentDto paymentDto = new PaymentDto(paymentId, paymentDate, paymentAmount, reservationId);
-                boolean isUpdated = paymentBO.update(paymentDto);
-
-                if (isUpdated) {
-                    refreshPage();
-                    new Alert(Alert.AlertType.INFORMATION, "Payment Updated").show();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Payment Not Updated").show();
-                }
-            } catch (NumberFormatException e) {
-                new Alert(Alert.AlertType.ERROR, "Invalid amount! Please enter a valid number.").show();
-            } catch (Exception e) {
-                new Alert(Alert.AlertType.ERROR, "An error occurred: " + e.getMessage()).show();
-                e.printStackTrace();
-            }
-
+        try {
+            double amount = Double.parseDouble(amountString);
+            return amount > 0; // Check if the amount is positive
+        } catch (NumberFormatException e) {
+            return false; // If it's not a valid number
+        }
     }
+
 
     private void refreshPage() throws Exception {
         getNextPaymentId();

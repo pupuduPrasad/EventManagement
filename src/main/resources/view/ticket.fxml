@@ -60,5 +60,6 @@
       <Button fx:id="btnSave" layoutX="488.0" layoutY="384.0" mnemonicParsing="false" onAction="#acSave" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: #2ecc71;" text="Save" textFill="WHITE" />
       <Button fx:id="btnUpdate" layoutX="625.0" layoutY="384.0" mnemonicParsing="false" onAction="#acUpdate" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: #546fbf;" text="Update" textFill="WHITE" />
       <Button fx:id="btnDelete" layoutX="763.0" layoutY="384.0" mnemonicParsing="false" onAction="#acDelete" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: #e74c3c;" text="Delete" textFill="WHITE" />
+      <Button layoutX="653.0" layoutY="304.0" mnemonicParsing="false" onAction="#acEventAdd" prefHeight="26.0" prefWidth="97.0" text="Add Event" />
    </children>
 </AnchorPane>

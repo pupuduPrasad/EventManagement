@@ -54,6 +54,8 @@ public class AddEventController implements Initializable {
 
     @Setter
     SponsorsController sponsorsController;
+    @Setter
+    TicketPageController ticketPageController;
 
     EventBo eventBo= (EventBo) BOFactory.getInstance().getBO(BOFactory.BOType.EVENT);
 
@@ -73,6 +75,11 @@ public class AddEventController implements Initializable {
 
         if (sponsorsController != null) {
             sponsorsController.setEventId(selectedItem.getEventId());
+        } else {
+            System.err.println("Error: sponsorsController is not initialized!");
+        }
+        if (ticketPageController != null) {
+            ticketPageController.setEventId(selectedItem.getEventId());
         } else {
             System.err.println("Error: sponsorsController is not initialized!");
         }

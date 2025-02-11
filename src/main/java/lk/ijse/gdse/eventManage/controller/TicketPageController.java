@@ -6,12 +6,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import lk.ijse.gdse.eventManage.bo.BOFactory;
 import lk.ijse.gdse.eventManage.bo.custom.TicketBO;
 import lk.ijse.gdse.eventManage.bo.custom.impl.TicketBOImpl;
@@ -137,14 +141,23 @@ public class TicketPageController implements Initializable {
     @FXML
     void acSave(ActionEvent event) throws Exception {
         String ticketId = lblId.getText();
-        Double price = Double.parseDouble(txtPrice.getText());
+        String priceString = txtPrice.getText();
         String custId = lblCustomerId.getText();
         String eventId = lblEventId.getText();
 
+        // Validate Price
+        if (!isValidPrice(priceString)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid price! Please enter a valid positive number.").show();
+            return;
+        }
 
+        // Convert price to double
+        double price = Double.parseDouble(priceString);
 
+        // Create TicketDto
         TicketDto ticketDto = new TicketDto(ticketId, price, custId, eventId);
 
+        // Save the ticket
         boolean isSaved = ticketBO.save(ticketDto);
 
         if (isSaved) {
@@ -153,8 +166,8 @@ public class TicketPageController implements Initializable {
         } else {
             new Alert(Alert.AlertType.ERROR, "Ticket Not Saved").show();
         }
-
     }
+
 
     private void refreshPage() throws Exception {
         getNextTicketId();
@@ -189,31 +202,70 @@ public class TicketPageController implements Initializable {
     @FXML
     void acUpdate(ActionEvent event) throws Exception {
         String ticketId = lblId.getText();
-        Double price = Double.parseDouble(txtPrice.getText());
+        String priceString = txtPrice.getText();
         String custId = lblCustomerId.getText();
         String eventId = lblEventId.getText();
 
+        if (ticketId.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Ticket ID is required for updating.").show();
+            return;
+        }
 
-            TicketDto ticketDto = new TicketDto(ticketId,price,custId,eventId);
-            boolean isUpdated = ticketBO.update(ticketDto);
+        // Validate Price
+        if (!isValidPrice(priceString)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid price! Please enter a valid positive number.").show();
+            return;
+        }
 
-            if (isUpdated) {
-                refreshPage();
-                new Alert(Alert.AlertType.INFORMATION, "Ticket Saved").show();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Ticket Not Saved").show();
-            }
+        double price = Double.parseDouble(priceString);
 
+        TicketDto ticketDto = new TicketDto(ticketId, price, custId, eventId);
+        boolean isUpdated = ticketBO.update(ticketDto);
+
+        if (isUpdated) {
+            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Ticket Updated").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Ticket Not Updated").show();
+        }
     }
+    private boolean isValidPrice(String priceString) {
+        if (priceString == null || priceString.isEmpty()) {
+            return false;
+        }
+
+        try {
+            double price = Double.parseDouble(priceString);
+            return price > 0; // Ensure the price is positive
+        } catch (NumberFormatException e) {
+            return false; // Not a valid number
+        }
+    }
+
 
     @FXML
     void getEventAction(ActionEvent event) {
-
     }
     @FXML
     void getCustomerAction(ActionEvent event) {
+    }
+    @FXML
+    void acEventAdd(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddEvent.fxml"));
+            Parent root = loader.load();
+            AddEventController addEventController = loader.getController();
+            addEventController.setTicketPageController(this);
 
-
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load Evens").show();
+        }
     }
 
     @Override
@@ -235,4 +287,7 @@ public class TicketPageController implements Initializable {
 
     }
 
+    public void setEventId(String eventId) {
+        lblEventId.setText(eventId);
+    }
 }
