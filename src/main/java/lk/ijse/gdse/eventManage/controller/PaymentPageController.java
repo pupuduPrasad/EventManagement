@@ -204,9 +204,9 @@ void acSave(ActionEvent event) {
 
         try {
             double amount = Double.parseDouble(amountString);
-            return amount > 0; // Check if the amount is positive
+            return amount > 0;
         } catch (NumberFormatException e) {
-            return false; // If it's not a valid number
+            return false;
         }
     }
 
@@ -227,7 +227,11 @@ void acSave(ActionEvent event) {
         ObservableList<PaymentTm> paymentTms = FXCollections.observableArrayList();
 
         for (PaymentDto paymentDto : paymentDTOS) {
-            PaymentTm paymentTm = new PaymentTm(paymentDto.getPId(), paymentDto.getDate(), paymentDto.getAmount(), paymentDto.getReservationId());
+            PaymentTm paymentTm = new PaymentTm(
+                    paymentDto.getPId(),
+                    paymentDto.getDate(),
+                    paymentDto.getAmount(),
+                    paymentDto.getReservationId());
             paymentTms.add(paymentTm);
         }
 

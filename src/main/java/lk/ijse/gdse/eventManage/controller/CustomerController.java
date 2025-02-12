@@ -140,13 +140,11 @@ public class CustomerController {
         String name = txtName.getText().trim();
         String coNumber = txtNumber.getText().trim();
 
-        // Validate Customer Name
         if (!name.matches("[A-Za-z ]{3,}")) {
             showAlert(Alert.AlertType.ERROR, "Invalid name! Name should contain only letters and be at least 3 characters long.");
             return;
         }
 
-        // Validate Contact Number
         if (!coNumber.matches("\\d{10}")) {
             showAlert(Alert.AlertType.ERROR, "Invalid contact number! It should contain exactly 10 digits.");
             return;

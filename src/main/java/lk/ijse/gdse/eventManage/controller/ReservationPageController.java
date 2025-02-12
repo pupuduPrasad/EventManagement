@@ -157,7 +157,6 @@ public class ReservationPageController implements Initializable {
 
     @FXML
     void acSave(ActionEvent event) throws Exception {
-        // Validation for required fields
         if (picReservationDate.getValue() == null) {
             new Alert(Alert.AlertType.WARNING, "Please select a reservation date.").show();
             return;
@@ -179,7 +178,6 @@ public class ReservationPageController implements Initializable {
         String eventVenue = txtVenue.getText();
         String eventId = lblEventId.getText();
 
-        // Create ReservationDto and save
         ReservationDto reservationDto = new ReservationDto(rId, date, eventVenue, eventId);
         boolean isSaved = reservationBO.save(reservationDto);
 

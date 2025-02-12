@@ -4,14 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,7 +32,9 @@ public class DashboardController implements Initializable {
         navigateTo("/view/event.fxml");
     }
     @FXML
-    void feedbackAc(ActionEvent event) {navigateTo("/view/feedbacklayout.fxml");}
+    void feedbackAc(ActionEvent event) {
+        navigateTo("/view/feedbacklayout.fxml");
+    }
     @FXML
     void paymentAc(ActionEvent event) {
         navigateTo("/view/payment.fxml");
@@ -50,15 +48,21 @@ public class DashboardController implements Initializable {
         navigateTo("/view/Sponsors.fxml");
     }
     @FXML
-    void studentAc(ActionEvent event) {navigateTo("/view/Customer.fxml");}
+    void studentAc(ActionEvent event) {
+        navigateTo("/view/Customer.fxml");
+    }
     @FXML
     void ticketAc(ActionEvent event) {
         navigateTo("/view/ticket.fxml");
     }
     @FXML
-    void userAc(ActionEvent event) {navigateTo("/view/AddUser.fxml");}
+    void userAc(ActionEvent event) {
+        navigateTo("/view/AddUser.fxml");
+    }
     @FXML
-    void logoutAc(ActionEvent event) {navigateTo("/view/loginView.fxml");}
+    void logoutAc(ActionEvent event) {
+        navigateTo("/view/loginView.fxml");
+    }
 
     public void navigateTo(String fxmlPath) {
         try {

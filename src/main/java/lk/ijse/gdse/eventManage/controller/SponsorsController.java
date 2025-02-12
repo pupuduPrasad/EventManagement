@@ -131,9 +131,6 @@ public class SponsorsController implements Initializable {
         refreshPage();
     }
 
-//    SponsorDAOImpl sponsorDAOImpl = new SponsorDAOImpl();
-//    SponsorEventDAOImpl sponsorEventDAOImpl = new SponsorEventDAOImpl();
-
 
     @FXML
     void acSave(ActionEvent event) throws Exception {
@@ -281,14 +278,12 @@ public class SponsorsController implements Initializable {
     private void loadTableData() throws Exception {
         ArrayList<JoinSponserEventDetailDto> list = sponsorBO.getAll();
 
-        // If list is null or empty, do not update the table
         if (list == null || list.isEmpty()) {
-            System.out.println("No data found!"); // Debugging check
-            tbtSponsor.setItems(FXCollections.observableArrayList()); // Clear table if empty
+            System.out.println("No data found!");
+            tbtSponsor.setItems(FXCollections.observableArrayList());
             return;
         }
 
-        // Convert to ObservableList
         ObservableList<SponsorTm> sponsorTms = FXCollections.observableArrayList();
 
         for (JoinSponserEventDetailDto dto : list) {
@@ -302,9 +297,8 @@ public class SponsorsController implements Initializable {
             ));
         }
 
-        // Update TableView
         tbtSponsor.setItems(sponsorTms);
-        tbtSponsor.refresh(); // Force UI to update
+        tbtSponsor.refresh();
     }
 
 

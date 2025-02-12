@@ -136,8 +136,6 @@ public class TicketPageController implements Initializable {
 
     }
 
-//    TicketDAOImpl ticketDAOImpl =new TicketDAOImpl();
-
     @FXML
     void acSave(ActionEvent event) throws Exception {
         String ticketId = lblId.getText();
@@ -145,19 +143,14 @@ public class TicketPageController implements Initializable {
         String custId = lblCustomerId.getText();
         String eventId = lblEventId.getText();
 
-        // Validate Price
         if (!isValidPrice(priceString)) {
             new Alert(Alert.AlertType.ERROR, "Invalid price! Please enter a valid positive number.").show();
             return;
         }
 
-        // Convert price to double
         double price = Double.parseDouble(priceString);
 
-        // Create TicketDto
         TicketDto ticketDto = new TicketDto(ticketId, price, custId, eventId);
-
-        // Save the ticket
         boolean isSaved = ticketBO.save(ticketDto);
 
         if (isSaved) {
@@ -211,7 +204,6 @@ public class TicketPageController implements Initializable {
             return;
         }
 
-        // Validate Price
         if (!isValidPrice(priceString)) {
             new Alert(Alert.AlertType.ERROR, "Invalid price! Please enter a valid positive number.").show();
             return;
@@ -236,9 +228,9 @@ public class TicketPageController implements Initializable {
 
         try {
             double price = Double.parseDouble(priceString);
-            return price > 0; // Ensure the price is positive
+            return price > 0;
         } catch (NumberFormatException e) {
-            return false; // Not a valid number
+            return false;
         }
     }
 

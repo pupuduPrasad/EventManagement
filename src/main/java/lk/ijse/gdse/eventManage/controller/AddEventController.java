@@ -83,8 +83,6 @@ public class AddEventController implements Initializable {
         } else {
             System.err.println("Error: sponsorsController is not initialized!");
         }
-
-        // Close the current stage
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
@@ -116,8 +114,6 @@ public class AddEventController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Failed to load Data!");
         }
     }
-
-//    EventDAOImpl eventDAOImpl = new EventDAOImpl();
 
     private void refreshPage() throws Exception {
         loadTableData();

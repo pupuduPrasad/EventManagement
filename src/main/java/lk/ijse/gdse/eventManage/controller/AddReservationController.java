@@ -70,7 +70,6 @@ public class AddReservationController implements Initializable {
         }
     }
 
-//    ReservationDAOImpl reservationDAOImpl = new ReservationDAOImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
