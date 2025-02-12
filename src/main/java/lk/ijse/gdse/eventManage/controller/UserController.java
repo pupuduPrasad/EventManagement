@@ -28,19 +28,14 @@ public class UserController implements Initializable {
     private Button btnRemove;
     @FXML
     private AnchorPane content;
-
     @FXML
     private ComboBox<String> cmbRemoveUser;
-
     @FXML
     private TextField txtConfirmPassword;
-
     @FXML
     private TextField txtPassword;
-
     @FXML
     private TextField txtUsername;
-
     @Setter
     private DashboardController dashboardController;
 
@@ -131,13 +126,10 @@ public class UserController implements Initializable {
 
     private void refreshPage() throws SQLException {
         loadUsernames();
-
         cmbRemoveUser.setPromptText("Select user you want to remove");
-
         txtUsername.setText(null);
         txtPassword.setText("");
         txtConfirmPassword.setText("");
-
         btnRemove.setDisable(true);
     }
     public void navigateTo(String fxmlPath) {
